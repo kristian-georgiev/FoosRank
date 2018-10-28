@@ -2,7 +2,7 @@
 const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
-
+const db = require('./db');
 
 // local dependencies
 const views = require('./routes/views');
