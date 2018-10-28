@@ -1,0 +1,29 @@
+{
+  "name": "foosrank",
+  "version": "1.0.0",
+  "description": "A game tracker and leaderboard for foosball",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kristian-georgiev/FoosRank.git"
+  },
+  "keywords": [
+    "foosball",
+    "leaderboard",
+    "rankings"
+  ],
+  "author": "Kris & Maddy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kristian-georgiev/FoosRank/issues"
+  },
+  "homepage": "https://github.com/kristian-georgiev/FoosRank#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "http": "0.0.0"
+  }
+}
