@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 // set routes
 app.use('/', views);
-// app.use('/api', api ); //TODO doesn't work, not sure why
+app.use('/api', api ); 
 app.use('/static', express.static('public'));
 
 // 404 route

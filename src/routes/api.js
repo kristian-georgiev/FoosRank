@@ -7,8 +7,11 @@ const Player = require('../models/player');
 
 const router = express.Router();
 
+//note: rn creates a new copy each time this is run
 const testPlayer = new Player({
 	'name': 'test',
 	'googleid': 123545,
 });
 testPlayer.save();
+
+module.exports = router;
