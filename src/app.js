@@ -2,11 +2,11 @@
 const http = require('http');
 const bodyParser = require('body-parser');
 const express = require('express');
-const db = require('./db');
 
 // local dependencies
 const views = require('./routes/views');
-
+const api = require('./routes/api');
+const db = require('./db');
 
 // initialize express app
 const app = express();
@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 
 // set routes
 app.use('/', views);
+// app.use('/api', api ); //TODO doesn't work, not sure why
 app.use('/static', express.static('public'));
 
 // 404 route
@@ -36,7 +37,7 @@ app.use(function(err, req, res, next) {
 });
 
 // port config
-const port = 3000; // config variable
+const port = 8000; // config variable
 const server = http.Server(app);
 server.listen(port, function() {
   console.log('Server running on port: ' + port);
