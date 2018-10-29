@@ -1,3 +1,6 @@
+// load env variables
+require('dotenv').config();
+
 // libraries
 const http = require('http');
 const bodyParser = require('body-parser');
