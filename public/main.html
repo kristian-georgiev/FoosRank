@@ -3,15 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dai muuuu</title>
+    <title>FoosRank</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <h2>V main-a sme maina</h2>
+        <div class="sticky-top" style="padding-bottom: 3px;">            
+            <nav class="navbar navbar-light bg-light" class="-webkit-box-shadow: 0 8px 6px -6px #999;
+            -moz-box-shadow: 0 8px 6px -6px #999;
+            box-shadow: 0 8px 6px -6px #999;">
+                <form class="form-inline">
+                    <a href="main.html" style="color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px;">FoosRank</a>
+                </form>
+            </nav>
+        </div>
     
-    <button onclick="mainApp.logOut()">logOut</button>
-    <script src="fireBase.js"></script>
-    <script src="main.js"></script>
+    <div class="container-fluid">    
+        <button type="button" class="btn btn-warning btn-block">Play as yellow!</button>
+        <button type="button" class="btn btn-dark btn-block">Play as black!</button>
+        <button type="button" class="btn btn-primary btn-block">Rankings</button>
+        <button type="button" class="btn btn-primary btn-block">My matches</button>
+        <button type="button" class="btn btn-light center" onclick="mainApp.logOut()">Log Out</button>
+    </div>
+
+    <script src="js/fireBase.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
