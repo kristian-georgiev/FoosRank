@@ -88,7 +88,6 @@ function display_popup(winning_team) {
   };
 
 
-
 // Record game results
 
 function record_game(){
