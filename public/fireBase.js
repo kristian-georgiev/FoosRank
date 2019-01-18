@@ -1,4 +1,4 @@
-var app_fireBase = {};
+// var app_fireBase = {};
 
 (function(){
   // Initialize Firebase
@@ -11,5 +11,14 @@ var app_fireBase = {};
     messagingSenderId: "267376943062"
   };
   firebase.initializeApp(config);
-app_fireBase = firebase;
+    // const firebase = require("firebase"); // probably really need these
+  // require("firebase/firestore");
+
+  // Initialize Cloud Firestore through Firebase
+  var db = firebase.firestore();
+  // Disable deprecated features
+  db.settings({
+    timestampsInSnapshots: true
+  });
+
 })()
