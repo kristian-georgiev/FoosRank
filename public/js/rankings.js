@@ -1,6 +1,6 @@
+var db = firebase.firestore();
 
 function createRow(data, table){
-	console.log(data);
 	var row = document.createElement("tr");
 
 	for (i = 0; i < columns.length; i ++) {
@@ -22,8 +22,7 @@ function createRow(data, table){
 	ranking += 1;
 }
 
-async function createTableBase(){ //TODO // see if this is actually async
-	var db = firebase.firestore();
+async function createTableBase(){ //TODO: see if this is actually async
 	var table = document.getElementById("rankingtable");
 	await db.collection("users").get().then(function(querySnapshot) {
 	    querySnapshot.forEach(function(doc) {
