@@ -1,7 +1,9 @@
 var mainApp = {};
+var firebase = app_fireBase;
+var currentUser = null;
+
 
 (function(){
-    var firebase = app_fireBase;
 var uid = null;    
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -12,7 +14,11 @@ var uid = null;
                 console.log("  Name: " + profile.displayName);
                 console.log("  Email: " + profile.email);
                 console.log("  Photo URL: " + profile.photoURL);
+
+                currentUser = profile.uid;
             });
+
+
         }else{
             // redirect to login page
             uid = null;
