@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <title>FoosRank</title>
 
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
@@ -35,9 +35,9 @@
   <body>
     <div id="message">
       <h2>Welcome</h2>
-      <a href="https://foosrank-9e12f.firebaseapp.com/login.html">Continue to FoosRank</a>
+      <a href="https://foosrank-9e12f.firebaseapp.com/main.html">Continue to FoosRank</a>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <p id="load">Loading&hellip;</p>
 
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <script>
@@ -55,7 +55,8 @@
         try {
           let app = firebase.app();
           let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+          document.getElementById('load').innerHTML = `Loaded with awesomeness and 🔥🔥🔥`;
+          // document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
         } catch (e) {
           console.error(e);
           document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
