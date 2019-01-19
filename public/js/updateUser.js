@@ -14,13 +14,18 @@ firebase.auth().onAuthStateChanged(function(user) {
 function addNewUser(user) {
 
 	// Create a new document in collection "users"
+
+	record_game();
+	
 	db.collection("users").doc(user.uid).set({ 
 	    elo: 1500,
 	    name: user.displayName,
-
+	    totalgames: 0,
+	    gameswon: 0,
+	    gameslost: 0
 	})
 	.then(function() {
-	    console.log("User successfully added!");
+	    console.log("New user successfully added!");
 	})
 	.catch(function(error) {
 	    console.error("Error writing document: ", error);
@@ -28,7 +33,8 @@ function addNewUser(user) {
 
 }
 
+// updates exisitng user in database when a game is played and recorded
 function updateExistingUser(user){
 
-	
+
 }
