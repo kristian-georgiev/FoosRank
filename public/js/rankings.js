@@ -34,6 +34,7 @@ async function createTableBase(){ //TODO: see if this is actually async
 
 var columns = ["Ranking", "Name", "Elo"];
 var ranking = 1;
+
 createTableBase();
 
 

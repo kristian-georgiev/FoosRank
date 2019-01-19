@@ -1,10 +1,9 @@
 var mainApp = {};
 var firebase = app_fireBase;
-var currentUser = null;
 
 
 (function(){
-var uid = null;    
+var uid = null // TODO: I don't think this is needed?    
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
@@ -15,7 +14,6 @@ var uid = null;
                 console.log("  Email: " + profile.email);
                 console.log("  Photo URL: " + profile.photoURL);
 
-                currentUser = profile.uid;
             });
 
 
