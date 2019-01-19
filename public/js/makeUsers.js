@@ -1,19 +1,29 @@
 var db = firebase.firestore();
 
-function addUser() {
+firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
 
-	// Add a new document with a generated id.
-	db.collection("users").add({
-	    name: "Tokyo",
-	    country: "Japan"
+            addUser(user);
+
+        }else{
+            // redirect to login page
+            window.location.replace("login.html");
+        }
+});
+
+function addUser(user) {
+
+	// Update/create a document in collection "users"
+	db.collection("users").doc(user.uid).set({ 
+	    elo: 1500,
+	    name: user.displayName
 	})
-	.then(function(docRef) {
-	    console.log("Document written with ID: ", docRef.id);
+	.then(function() {
+	    console.log("User successfully updated / created!");
 	})
 	.catch(function(error) {
-	    console.error("Error adding document: ", error);
+	    console.error("Error writing document: ", error);
 	});
 
 }
-
-addUser();
