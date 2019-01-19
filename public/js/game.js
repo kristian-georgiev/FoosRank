@@ -1,5 +1,6 @@
 var mainApp = {};
 var firebase = app_fireBase;
+var db = firebase.firestore();
 
 (function(){
 var uid = null 
@@ -92,7 +93,6 @@ var uid = null
 
         popup_continue.onclick = function() {
             record_game()
-            window.location = "waiting_area.html"
 
         };
 
@@ -112,7 +112,7 @@ var uid = null
             })
             .then(function(docRef) {
                 console.log("Game successfully added with ID: ", docRef.id);
-                window.location = "game_setup.html"
+                window.location = "waiting_area.html"
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
