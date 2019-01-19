@@ -1,7 +1,6 @@
 var mainApp = {};
 var firebase = app_fireBase;
 
-
 (function(){
 var uid = null 
     firebase.auth().onAuthStateChanged(function(user) {
@@ -98,18 +97,34 @@ var uid = null
         };
 
 
-        // Record game results
-
+        // Record game results - TODO need to update users (be careful of await)
         function record_game(){
-            return false
+
+            // adds a new game to games collection in database
+            db.collection("games").add({ //TODO hardcoded
+                black1uid: "temptempuid1",
+                black2uid: "temptempuid2",
+                yellow1uid: "temptempuid1",
+                yellow2uid: "temptempuid2",
+                black_score: yellow_sc,
+                yellow_score: black_sc,
+                is_yellow_winner: (yellow_sc > black_sc)
+            })
+            .then(function(docRef) {
+                console.log("Game successfully added with ID: ", docRef.id);
+                window.location = "game_setup.html"
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
         }
   
 
-}else{
-    // redirect to login page
-    uid = null;
-    window.location.replace("login.html");
-}
+        }else{
+            // redirect to login page
+            uid = null;
+            window.location.replace("login.html");
+        }
 });
 
 function logOut(){
