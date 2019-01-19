@@ -1,4 +1,4 @@
-// var app_fireBase = {};
+var app_fireBase = {};
 
 (function(){
   // Initialize Firebase
@@ -11,6 +11,7 @@
     messagingSenderId: "267376943062"
   };
   firebase.initializeApp(config);
+  app_fireBase = firebase;
     // const firebase = require("firebase"); // probably really need these
   // require("firebase/firestore");
 
