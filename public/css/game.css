@@ -21,10 +21,10 @@
 .scorenumberdiv {
   position: absolute;
   width: 100vw;
-  top: 50vh;
+  top: 25vh;
 }
 #message h1 { 
-  font-size: 200px;
+  font-size: 25vw;
 }
 
 .bottom-left {
