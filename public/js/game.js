@@ -182,11 +182,11 @@ var uid = null
         };
 
 
-        // Record game results - TODO need to update users (be careful of await)
+        // Record game results - TODO need to update users (be careful of await), unhardcode addGame()
         function record_game(){
 
             addGame();
-            updatePlayerState();
+            updatePlayerStats();
         }
         }else{
             // redirect to login page
@@ -212,6 +212,12 @@ var uid = null
                     .catch(function(error) {
                         console.error("Error adding document: ", error);
                     });
+        }
+
+        function updatePlayerStats(){
+            // players_ref.update({
+            //     elo: user.uid,
+            // });    
         }
 });
 
