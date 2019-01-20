@@ -10,20 +10,25 @@ var uid = null
         var booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
         var players_ref = db.collection("players_current_game").doc("players")
 
-        players_ref.get().then(function(doc) {
+        var y_1_name = document.getElementById("y_1_name"); // Player names to be displayed
+        var y_2_name = document.getElementById("y_2_name");;
+        var b_1_name = document.getElementById("b_1_name");;
+        var b_2_name = document.getElementById("b_2_name");;
+        
+
+        players_ref.get().then(function(doc) { // Player names to be displayed
             if (doc.exists) {
-                console.log("Players:")
-                console.log("---------------")
-                console.log(doc.data().yellow_1);
-                console.log(doc.data().yellow_2);
-                console.log(doc.data().black_1);
-                console.log(doc.data().black_2);
-                console.log("---------------")
+                y_1_name.innerHTML = doc.data().yellow_1_name
+                y_2_name.innerHTML = doc.data().yellow_2_name
+                b_1_name.innerHTML = doc.data().black_1_name
+                b_2_name.innerHTML = doc.data().black_2_name
             } else {
                 console.log("We fucked up!");
             }
-        })
-        
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+
         
         // Game starts
 
@@ -38,20 +43,18 @@ var uid = null
         var black_sc  = 0;
 
         
-        var score_history = [];
+        var score_history = []; // Maintain array of scores to make undoing possible
         var last_to_score = null;
 
-        var y_button = document.getElementById("yellow_score");
+        var y_button = document.getElementById("yellow_score"); // Grab elts from page
         var b_button = document.getElementById("black_score");
-
         var undo_button = document.getElementById("undo");
-
         var scoretable = document.getElementById("scoretable");
 
         // Scoring goals
 
-        scores_ref.onSnapshot(function(doc) {
-            scores_ref.get().then(function(doc) {
+        scores_ref.onSnapshot(function(doc) { // Listen for changes in the scores DB 
+            scores_ref.get().then(function(doc) { // and update HTML upon each change
                 if (doc.exists) {
                     yellow_sc = doc.data().yellow_sc;
                     black_sc = doc.data().black_sc;
@@ -64,21 +67,6 @@ var uid = null
             });
         });
 
-
-        function change_scoretable(){
-            scores_ref.get().then(function(doc) {
-                if (doc.exists) {
-                    black_sc = doc.data().black_sc;
-                    yellow_sc = doc.data().yellow_sc;
-                } else {
-                    console.log("We fucked up!");
-                }
-            }).catch(function(error) {
-                console.log("Error getting document:", error);
-            });
-            scoretable.innerHTML = yellow_sc + " : " + black_sc;
-            }
-
         y_button.onclick = function() {
             yellow_sc += 1;
             scores_ref.set({
@@ -89,7 +77,7 @@ var uid = null
             score_history.push("y");
             update_game_status();
 
-            is_game_over().then(function(result){
+            is_game_over().then(function(result){ // check if game is over after updating score
                 if (result == true) {
                     display_popup("Yellow");
                 }
@@ -103,11 +91,11 @@ var uid = null
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
-            change_scoretable();
-            score_history.push("b");
+            // change_scoretable();
             update_game_status();
+            score_history.push("b");
 
-            is_game_over().then(function(result){
+            is_game_over().then(function(result){ // check if game is over after updating score
                 if (result == true) {
                     display_popup("Black");
                 }
@@ -124,12 +112,13 @@ var uid = null
             } 
             if (last_to_score == "b") {
                 black_sc -= 1;
-            }
+            } // implicit skip if there were no more actions
             scores_ref.set({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
-              change_scoretable()            
+            //   change_scoretable() implicitly
+              update_game_status() // in case it was an undo of a winning goal
         };
 
 
@@ -140,8 +129,13 @@ var uid = null
                 booleans_ref.set({
                     has_game_ended: true,
                     has_game_started: true
-                });
+                });            
                 console.log("has_game_ended was bitched")
+            } else {
+                booleans_ref.set({
+                    has_game_ended: false,
+                    has_game_started: true
+                });            
             }
         };
 
