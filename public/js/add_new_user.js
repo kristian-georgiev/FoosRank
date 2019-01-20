@@ -2,9 +2,19 @@ var db = firebase.firestore();
 
 firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-        	//TODO check if it's a new user
-            addNewUser(user);
+       		var tempDocRef = db.collection('users').doc(user.uid);
+			tempDocRef.get().then((docData) => {
+			    if (docData.exists) {
+			      	console.log("current user already exists");
+			    } else {
+			      	console.log("current user doesn't exist yet, adding user");
+			    	addNewUser(user);
+			    }
+				}).catch((fail) => {
+					console.error("Error adding user: ", fail);
 
+			});
+        
         }else{
             // redirect to login page
             window.location.replace("login.html");
@@ -14,7 +24,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 function addNewUser(user) {
 
 	// Create a new document in collection "users"
-	db.collection("users").doc(user.uid).set({ 
+	db.collection("users").doc(user.uid).set({ // default values
 	    elo: 1500,
 	    name: user.displayName,
 	    totalgames: 0,
@@ -27,11 +37,5 @@ function addNewUser(user) {
 	.catch(function(error) {
 	    console.error("Error writing document: ", error);
 	});
-
-}
-
-// updates exisitng user in database when a game is played and recorded
-function updateExistingUser(user, ){
-
 
 }
