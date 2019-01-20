@@ -1,4 +1,5 @@
-var db = firebase.firestore();
+const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
 
 function createRow(data, table){
 	var row = document.createElement("tr");

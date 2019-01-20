@@ -16,10 +16,7 @@ var app_fireBase = {};
   // require("firebase/firestore");
 
   // Initialize Cloud Firestore through Firebase
-  var db = firebase.firestore();
-  // Disable deprecated features
-  db.settings({
-    timestampsInSnapshots: true
-  });
+  const db = firebase.firestore();
+  db.settings({ timestampsInSnapshots: true });
 
 })()

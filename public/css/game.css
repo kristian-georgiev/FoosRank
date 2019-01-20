@@ -18,11 +18,11 @@ body {
 }
 
 #message { 
-  background-color: #33cc33; 
-  max-width: 90%; 
-  margin: 10px auto 16px; 
-  padding: 32px 24px; 
-  border-radius: 3px; 
+  background-color: #33cc33;
+  max-width: 90%;
+  margin: 10px auto 16px;
+  padding: 32px 24px;
+  border-radius: 3px;
 }
 
 #message h2 { 

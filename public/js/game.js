@@ -1,14 +1,15 @@
 var mainApp = {};
 var firebase = app_fireBase;
-var db = firebase.firestore();
+const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
 
 (function(){
 var uid = null 
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
+        if (user) {  // TODO: only if a player is part of the game
         // User is signed in.
-        var booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
-        var players_ref = db.collection("players_current_game").doc("players")
+        const booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
+        const players_ref = db.collection("players_current_game")
 
         var y_1_name = document.getElementById("y_1_name"); // Player names to be displayed
         var y_2_name = document.getElementById("y_2_name");;
@@ -16,28 +17,19 @@ var uid = null
         var b_2_name = document.getElementById("b_2_name");;
         
 
-        players_ref.get().then(function(doc) { // Player names to be displayed
-            if (doc.exists) {
-                y_1_name.innerHTML = doc.data().yellow_1_name
-                y_2_name.innerHTML = doc.data().yellow_2_name
-                b_1_name.innerHTML = doc.data().black_1_name
-                b_2_name.innerHTML = doc.data().black_2_name
-            } else {
-                console.log("We fucked up!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
+        players_ref.get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+                console.log(doc.data().name)
+            })
+        }
 
+        );
+
+        // if user is not in the 
         
         // Game starts
 
-        var scores_ref = db.collection("score_current_game").doc("scores"); // DB alias
-
-        scores_ref.set({ // Set database scores back to 0 : 0
-            yellow_sc: 0,
-            black_sc: 0
-          });
+        const scores_ref = db.collection("score_current_game").doc("scores"); // DB alias
 
         var yellow_sc = 0; // Initialize local score variables
         var black_sc  = 0;
@@ -53,7 +45,7 @@ var uid = null
 
         // Scoring goals
 
-        scores_ref.onSnapshot(function(doc) { // Listen for changes in the scores DB 
+        scores_ref.onSnapshot(function() { // Listen for changes in the scores DB 
             scores_ref.get().then(function(doc) { // and update HTML upon each change
                 if (doc.exists) {
                     yellow_sc = doc.data().yellow_sc;
@@ -69,7 +61,7 @@ var uid = null
 
         y_button.onclick = function() {
             yellow_sc += 1;
-            scores_ref.set({
+            scores_ref.update({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
@@ -87,11 +79,11 @@ var uid = null
 
         b_button.onclick = function() {
             black_sc += 1;
-            scores_ref.set({
+            scores_ref.update({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
-            // change_scoretable();
+            // change scoretable implicitly
             update_game_status();
             score_history.push("b");
 
@@ -113,12 +105,12 @@ var uid = null
             if (last_to_score == "b") {
                 black_sc -= 1;
             } // implicit skip if there were no more actions
-            scores_ref.set({
+            scores_ref.update({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
-            //   change_scoretable() implicitly
-              update_game_status() // in case it was an undo of a winning goal
+            // change scoretable implicitly
+            update_game_status() // in case it was an undo of a winning goal
         };
 
 
@@ -126,13 +118,13 @@ var uid = null
 
         function update_game_status() {
             if (((yellow_sc == 10 && black_sc <=8) || (yellow_sc > 10 && (yellow_sc - black_sc == 2)) ) || ((black_sc == 10 && yellow_sc <=8) || (black_sc > 10 && (black_sc - yellow_sc == 2)) )) {
-                booleans_ref.set({
+                booleans_ref.update({
                     has_game_ended: true,
-                    has_game_started: true
+                    has_game_started: false
                 });            
                 console.log("has_game_ended was bitched")
             } else {
-                booleans_ref.set({
+                booleans_ref.update({
                     has_game_ended: false,
                     has_game_started: true
                 });            
