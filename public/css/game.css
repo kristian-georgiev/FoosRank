@@ -1,13 +1,3 @@
-/*body {
-  background-color:whitesmoke; 
-  color: rgba(0,0,0,0.87); 
-  font-family: Roboto, Helvetica, Arial, sans-serif; 
-  margin: 0; 
-  padding: 0; 
-}*/
-
-
-
 #undo { 
   font-size: 3vw; 
   color: grey; 
@@ -23,28 +13,47 @@
   width: 100vw;
   height: 100vh;
   margin: 0px; 
-  /*padding: 32px 24px; */
   border-radius: 3px; 
   position: relative;
   text-align: center;
   color: white;
 }
-.test {
+.scorenumberdiv {
   position: absolute;
   width: 100vw;
-  top: 50vh;
+  top: 25vh;
+  pointer-events:none; /*this makes it so that you can click through it*/
+}
+#message h1 { 
+  font-size: 25vw;
+}
+
+#yellow_color {
+  position:absolute;
+  width:50vw;
+  height: 100vh;
+  background-color: #FFD133;
+}
+#black_color {
+  position:absolute;
+  width:50vw;
+  height: 100vh;
+  left: 50vw;
+  background-color: #000000;
 }
 
 .bottom-left {
   position: absolute;
   bottom: 32px;
   left: 32px;
+  pointer-events:none;
 }
 
 .top-left {
   position: absolute;
   top: 32px;
   left: 32px;
+  pointer-events:none;
 }
 
 
@@ -52,27 +61,15 @@
   position: absolute;
   top: 32px;
   right: 32px;
+  pointer-events:none;
 }
 
 .bottom-right {
   position: absolute;
   bottom: 32px;
   right: 32px;
+  pointer-events:none;
 }
-
-/*#message h2 { 
-  color: #ffa100; 
-  font-weight: bold; 
-  font-size: 16px; 
-  margin: 0 0 8px; 
-}*/
-
-/*#message h1 { 
-  font-size: 22px; 
-  font-weight: 300; 
-  color: rgba(0,0,0,0.6); 
-  margin: 0 0 16px;
-}*/
 
 
 #message p { 
@@ -81,30 +78,11 @@
   font-size: 2.5vw; 
 }
 
-/*#message, #message a { 
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); 
-}*/
-
-/*#score h1 { 
-  font-size: 30vw; 
-  color:azure; 
-  text-align: center; 
-}*/
-
-/*#load { 
-  color: rgba(0,0,0,0.4); 
-  text-align: center; 
-  font-size: 13px; 
-}*/
-
 @media (max-width: 600px) {
   body, #message { 
     margin-top: 0; 
-    background: white; 
+    /*background: white; TODO: remove this;*/
     box-shadow: none; 
-  }
-  body { 
-    border-top: 16px solid #ffa100; 
   }
 }
 
