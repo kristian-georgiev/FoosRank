@@ -12,6 +12,56 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    
+    <div class="btn-group btn-group-lg btn-block" role="group" id="message">
+            <button id="yellow_score" type="button" class="scores btn btn-warning">Goal!</button>
+            <button id="black_score" type="button" class="scores btn btn-dark">Goal!</button>
+
+            <p id="y_1_name" class="bottom-left"> Noone here </p>
+            <p id="y_2_name" class="top-left"> Noone here </p>
+            <p id="b_1_name" class="bottom-right"> Noone here </p>
+            <p id="b_2_name" class="top-right"> Noone here </p>
+        <div id="score" class = "test">
+            <h1 id="scoretable">0 : 0</h1>
+        </div>
+    </div>
+    <div style="position: relative; text-align: center; margin-top: 2vw">
+        <button id="undo" type="button" class="btn btn-light center" style="margin: auto">
+                Undo <i class="fas fa-undo"></i>
+        </button>
+    </div>
+
+    <div id="popup" class="modal">
+      <div class="modal-content">
+        <div id="popup_text" style="text-align:center"> </div>
+        <button id="popup_undo" type="button" class="btn btn-light ">Undo</button>
+        <button id="popup_continue" type="button" class="btn btn-primary">Continue</button>
+      </div>
+    </div>
+
+    <script src="js/fireBase.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FoosRank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/game.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
     <div class="sticky-top" style="padding-bottom: 3px;">            
             <nav class="navbar navbar-light bg-light" class="-webkit-box-shadow: 0 8px 6px -6px #999;
             -moz-box-shadow: 0 8px 6px -6px #999;
@@ -20,7 +70,7 @@
                     <a class="nav-link active" style="color: #ffa100; font-weight: bold; font-size: 16px;">FoosRank</a>
                 </form>
             </nav>
-        </div>
+    </div>
     
     <div id="message">
         <div id="score">
@@ -46,14 +96,10 @@
     <div id="popup_text" style="text-align:center"> </div>
     <button id="popup_undo" type="button" class="btn btn-light ">Undo</button>
     <button id="popup_continue" type="button" class="btn btn-primary">Continue</button>
-
-
   </div>
-
 </div>
-
 
     <script src="js/fireBase.js"></script>
     <script src="js/game.js"></script>
 </body>
-</html>
+</html> -->
