@@ -17,15 +17,13 @@ var uid = null
         var b_2_name = document.getElementById("b_2_name");;
         
 
-        players_ref.get().then((snapshot) => {
+        players_ref.get().then((snapshot) => { // player names
             snapshot.docs.forEach(doc => {
                 console.log(doc.data().name)
             })
         }
 
         );
-
-        // if user is not in the 
         
         // Game starts
 
@@ -114,6 +112,8 @@ var uid = null
         };
 
 
+        
+
         // Checking status of game
 
         function update_game_status() {
@@ -176,7 +176,7 @@ var uid = null
 
         // Record game results - TODO need to update users (be careful of await), unhardcode addGame()
         function record_game(){
-
+            // TODO clean players_ref after game is finished
             addGame();
             updatePlayerStats();
         }

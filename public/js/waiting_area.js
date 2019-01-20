@@ -20,65 +20,90 @@ var uid = null // TODO: I don't think this is needed?
 
             var start_btn = document.getElementById("start")
     
-            
-
-            function has_player_claimed_another_spot() {
-                return false
-            }
-
-            function has_player_claimed_this_spot() {
-                return false
-            }
-
 
             // Sign-ups
 
             yellow_1_btn.onclick = function() {
-                if (has_player_claimed_another_spot() == false) {    
-                    players_ref.doc("yellow_1").update({
-                        uid: user.uid,
-                        name: user.displayName
-                    });
-                    yellow_1_btn.innerHTML = "Yellow 1 claimed by " + user.displayName 
-                };
-                if (has_player_claimed_another_spot() == true) {    
-                    players_ref.doc("yellow_1").update({
-                        uid: "",
-                        name: ""
-                    });
-                    yellow_1_btn.innerHTML = "Claim Yellow 1" 
-                };
+                players_ref.where('uid', '==', user.uid).get().then((snapshot) => { // check if user is in the current players DB 
+                    if (snapshot.docs.length == 0) { // Player has not signed up for other spots
+                        players_ref.doc("yellow_1").update({
+                            uid: user.uid,
+                            name: user.displayName
+                        });    
+                    } else { // If player has signed up for that spot, free it with the second click
+                        snapshot.docs.forEach(doc => {
+                            if (doc.id == "yellow_1") {
+                                players_ref.doc("yellow_1").update({
+                                    uid: "",
+                                    name: "Claim spot!"
+                                });            
+                            };
+                        });
+                    };
+                });
             };
 
             yellow_2_btn.onclick = function() {
-                if (has_player_claimed_another_spot() == false) {    
-                    players_ref.doc("yellow_2").update({
-                        uid: user.uid,
-                        name: user.displayName
-                    });
-                    yellow_2_btn.innerHTML = "Yellow 2 claimed by " + user.displayName 
-                };
+                players_ref.where('uid', '==', user.uid).get().then((snapshot) => { // check if user is in the current players DB 
+                    if (snapshot.docs.length == 0) { // Player has not signed up for other spots
+                        players_ref.doc("yellow_2").update({
+                            uid: user.uid,
+                            name: user.displayName
+                        });    
+                    } else { // If player has signed up for that spot, free it with the second click
+                        snapshot.docs.forEach(doc => {
+                            if (doc.id == "yellow_2") {
+                                players_ref.doc("yellow_2").update({
+                                    uid: "",
+                                    name: "Claim spot!"
+                                });            
+                            };
+                        });
+                    };
+                });
             };
 
             black_1_btn.onclick = function() {
-                if (has_player_claimed_another_spot() == false) {    
-                    players_ref.doc("black_1").update({
-                        uid: user.uid,
-                        name: user.displayName
-                    });
-                    black_1_btn.innerHTML = "Black 1 claimed by " + user.displayName 
-                };
+                players_ref.where('uid', '==', user.uid).get().then((snapshot) => { // check if user is in the current players DB 
+                    if (snapshot.docs.length == 0) { // Player has not signed up for other spots
+                        players_ref.doc("black_1").update({
+                            uid: user.uid,
+                            name: user.displayName
+                        });    
+                    } else { // If player has signed up for that spot, free it with the second click
+                        snapshot.docs.forEach(doc => {
+                            if (doc.id == "black_1") {
+                                players_ref.doc("black_1").update({
+                                    uid: "",
+                                    name: "Claim spot!"
+                                });            
+                            };
+                        });
+                    };
+                });
             };
 
             black_2_btn.onclick = function() {
-                if (has_player_claimed_another_spot() == false) {    
-                    players_ref.doc("black_2").update({
-                        uid: user.uid,
-                        name: user.displayName
-                    });
-                    black_2_btn.innerHTML = "Black 2 claimed by " + user.displayName 
-                };
+                players_ref.where('uid', '==', user.uid).get().then((snapshot) => { // check if user is in the current players DB 
+                    if (snapshot.docs.length == 0) { // Player has not signed up for other spots
+                        players_ref.doc("black_2").update({
+                            uid: user.uid,
+                            name: user.displayName
+                        });    
+                    } else { // If player has signed up for that spot, free it with the second click
+                        snapshot.docs.forEach(doc => {
+                            if (doc.id == "black_2") {
+                                players_ref.doc("black_2").update({
+                                    uid: "",
+                                    name: "Claim spot!"
+                                });            
+                            };
+                        });
+                    };
+                });
             };
+
+            // TODO: wrap the above code in a function to avoid repeating code
 
             // Update HTML upon changing players DB
 
@@ -86,6 +111,27 @@ var uid = null // TODO: I don't think this is needed?
                 players_ref.doc("yellow_1").get().then(function(doc) {
                     if (doc.exists) {
                         yellow_1_btn.innerHTML = doc.data().name 
+                    } else {
+                        console.log("We fucked up!");
+                    }
+                });
+                players_ref.doc("yellow_2").get().then(function(doc) {
+                    if (doc.exists) {
+                        yellow_2_btn.innerHTML = doc.data().name 
+                    } else {
+                        console.log("We fucked up!");
+                    }
+                });
+                players_ref.doc("black_1").get().then(function(doc) {
+                    if (doc.exists) {
+                        black_1_btn.innerHTML = doc.data().name 
+                    } else {
+                        console.log("We fucked up!");
+                    }
+                });
+                players_ref.doc("black_2").get().then(function(doc) {
+                    if (doc.exists) {
+                        black_2_btn.innerHTML = doc.data().name 
                     } else {
                         console.log("We fucked up!");
                     }
