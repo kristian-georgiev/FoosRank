@@ -6,10 +6,31 @@ var db = firebase.firestore();
 var uid = null 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-            // User is signed in.
+        // User is signed in.
 
+
+        // Waiting area code
+
+        // Choose players
+
+        // 'Start' clicked
+        
+        // Game starts
+
+        var scores_ref = db.collection("score_current_game").doc("scores");
         var yellow_sc = 0;
         var black_sc  = 0;
+        scores_ref.get().then(function(doc) {
+            if (doc.exists) {
+                yellow_sc = doc.data().black_sc;
+                black_sc = doc.data().yellow_sc;
+            } else {
+                console.log("We fucked up!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+        
         var score_history = [];
         var last_to_score = null;
 
