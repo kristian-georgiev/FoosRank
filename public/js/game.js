@@ -7,17 +7,34 @@ var uid = null
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
         // User is signed in.
+        var booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
+        var players_ref = db.collection("players_current_game").doc("players")
 
+        var yellow_1_btn = document.getElementById("yellow_1");
+        var yellow_2_btn = document.getElementById("yellow_2");
+        var black_1_btn = document.getElementById("black_1");
+        var black_2_btn = document.getElementById("black_2");
 
-        // Waiting area code
-
-        // Choose players
-
+        // yellow_1_btn.onclick = function() {
+        //     players_ref.get().then(function(doc) {
+        //         if (doc.exists) {
+        //             yellow_sc = doc.data().yellow_sc;
+        //             black_sc = doc.data().black_sc;
+        //             scoretable.innerHTML = yellow_sc + " : " + black_sc;
+        //         } else {
+        //             console.log("We fucked up!");
+        //         }
+        //     }).catch(function(error) {
+        //         console.log("Error getting document:", error);
+        //     });
+            
+        // };
+        
         // 'Start' clicked
         
         // Game starts
 
-        var scores_ref = db.collection("score_current_game").doc("scores");
+        var scores_ref = db.collection("score_current_game").doc("scores"); // DB alias
 
         scores_ref.set({ // Set database scores back to 0 : 0
             yellow_sc: 0,
@@ -30,6 +47,7 @@ var uid = null
         
         var score_history = [];
         var last_to_score = null;
+        // var is_game_over = false;
 
         var y_button = document.getElementById("yellow_score");
         var b_button = document.getElementById("black_score");
@@ -52,7 +70,8 @@ var uid = null
             }).catch(function(error) {
                 console.log("Error getting document:", error);
             });
-            });
+        });
+
 
         function change_scoretable(){
             scores_ref.get().then(function(doc) {
@@ -70,28 +89,38 @@ var uid = null
 
         y_button.onclick = function() {
             yellow_sc += 1;
-            db.collection("score_current_game").doc('scores').set({
+            scores_ref.set({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
             // change_scoretable() implicitly by the onSnapshot listening for changes in the DB
             score_history.push("y");
-            if(is_game_over()){
-                display_popup("Yellow")
-            }
+            update_game_status();
+
+            is_game_over().then(function(result){
+                if (result == true) {
+                    display_popup("Yellow");
+                }
+
+            })
         };
 
         b_button.onclick = function() {
             black_sc += 1;
-            db.collection("score_current_game").doc('scores').set({
+            scores_ref.set({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
-            change_scoretable()
+            change_scoretable();
             score_history.push("b");
-            if(is_game_over()){
-                display_popup("Black")
-            }
+            update_game_status();
+
+            is_game_over().then(function(result){
+                if (result == true) {
+                    display_popup("Black");
+                }
+
+            })
         };
 
         // Undoing actions
@@ -104,21 +133,37 @@ var uid = null
             if (last_to_score == "b") {
                 black_sc -= 1;
             }
-            scoretable.innerHTML = yellow_sc + " : " + black_sc;
+            scores_ref.set({
+                yellow_sc: yellow_sc,
+                black_sc: black_sc
+              });
+              change_scoretable()            
         };
 
 
         // Checking status of game
 
-        function is_game_over() {
-            if ((yellow_sc == 10 && black_sc <=8) || (yellow_sc > 10 && (yellow_sc - black_sc == 2)) ) {
-                return "y"
+        function update_game_status() {
+            if (((yellow_sc == 10 && black_sc <=8) || (yellow_sc > 10 && (yellow_sc - black_sc == 2)) ) || ((black_sc == 10 && yellow_sc <=8) || (black_sc > 10 && (black_sc - yellow_sc == 2)) )) {
+                booleans_ref.set({
+                    has_game_ended: true,
+                    has_game_started: true
+                });
+                console.log("has_game_ended was bitched")
             }
-            if ((black_sc == 10 && yellow_sc <=8) || (black_sc > 10 && (black_sc - yellow_sc == 2)) ) {
-                return "b"
-            }
-            return false
         };
+
+        function is_game_over() {
+            var buff = false;
+            return booleans_ref.get().then(function(doc) {
+                if (doc.exists) {
+                    if(doc.data().has_game_ended == true) {
+                        buff = true;
+                    }
+                    return buff;
+                }   
+            });
+        }
 
 
         // Popup upon ending game
