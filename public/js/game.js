@@ -10,27 +10,20 @@ var uid = null
         var booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
         var players_ref = db.collection("players_current_game").doc("players")
 
-        var yellow_1_btn = document.getElementById("yellow_1");
-        var yellow_2_btn = document.getElementById("yellow_2");
-        var black_1_btn = document.getElementById("black_1");
-        var black_2_btn = document.getElementById("black_2");
-
-        // yellow_1_btn.onclick = function() {
-        //     players_ref.get().then(function(doc) {
-        //         if (doc.exists) {
-        //             yellow_sc = doc.data().yellow_sc;
-        //             black_sc = doc.data().black_sc;
-        //             scoretable.innerHTML = yellow_sc + " : " + black_sc;
-        //         } else {
-        //             console.log("We fucked up!");
-        //         }
-        //     }).catch(function(error) {
-        //         console.log("Error getting document:", error);
-        //     });
-            
-        // };
+        players_ref.get().then(function(doc) {
+            if (doc.exists) {
+                console.log("Players:")
+                console.log("---------------")
+                console.log(doc.data().yellow_1);
+                console.log(doc.data().yellow_2);
+                console.log(doc.data().black_1);
+                console.log(doc.data().black_2);
+                console.log("---------------")
+            } else {
+                console.log("We fucked up!");
+            }
+        })
         
-        // 'Start' clicked
         
         // Game starts
 
@@ -47,7 +40,6 @@ var uid = null
         
         var score_history = [];
         var last_to_score = null;
-        // var is_game_over = false;
 
         var y_button = document.getElementById("yellow_score");
         var b_button = document.getElementById("black_score");
