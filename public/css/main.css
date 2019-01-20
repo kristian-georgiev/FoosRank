@@ -57,7 +57,7 @@ body {
 @media (max-width: 600px) {
   body, #message { 
     margin-top: 0; 
-    background: white; 
+    background: white;  /*TODO remove this? this is what turns the background white when viewing on a phone*/
     box-shadow: none; 
   }
 /*  body { 

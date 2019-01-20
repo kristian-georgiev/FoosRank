@@ -22,21 +22,38 @@
   position: absolute;
   width: 100vw;
   top: 25vh;
+  pointer-events:none; /*this makes it so that you can click through it*/
 }
 #message h1 { 
   font-size: 25vw;
+}
+
+#yellow_color {
+  position:absolute;
+  width:50vw;
+  height: 100vh;
+  background-color: #FFD133;
+}
+#black_color {
+  position:absolute;
+  width:50vw;
+  height: 100vh;
+  left: 50vw;
+  background-color: #000000;
 }
 
 .bottom-left {
   position: absolute;
   bottom: 32px;
   left: 32px;
+  pointer-events:none;
 }
 
 .top-left {
   position: absolute;
   top: 32px;
   left: 32px;
+  pointer-events:none;
 }
 
 
@@ -44,12 +61,14 @@
   position: absolute;
   top: 32px;
   right: 32px;
+  pointer-events:none;
 }
 
 .bottom-right {
   position: absolute;
   bottom: 32px;
   right: 32px;
+  pointer-events:none;
 }
 
 
@@ -62,7 +81,7 @@
 @media (max-width: 600px) {
   body, #message { 
     margin-top: 0; 
-    background: white; 
+    /*background: white; TODO: remove this;*/
     box-shadow: none; 
   }
 }

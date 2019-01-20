@@ -59,7 +59,11 @@ var uid = null
             });
         });
 
-        y_button.onclick = function() {
+        var yellow_div = document.getElementById("yellow_color");;
+        var black_div = document.getElementById("black_color");;
+
+        yellow_div.addEventListener('click',function(e){
+
             yellow_sc += 1;
             scores_ref.update({
                 yellow_sc: yellow_sc,
@@ -75,9 +79,10 @@ var uid = null
                 }
 
             })
-        };
+        });
 
-        b_button.onclick = function() {
+        black_div.addEventListener('click',function(e){
+
             black_sc += 1;
             scores_ref.update({
                 yellow_sc: yellow_sc,
@@ -93,7 +98,7 @@ var uid = null
                 }
 
             })
-        };
+        });
 
         // Undoing actions
 
