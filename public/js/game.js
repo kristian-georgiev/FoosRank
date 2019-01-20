@@ -18,18 +18,15 @@ var uid = null
         // Game starts
 
         var scores_ref = db.collection("score_current_game").doc("scores");
-        var yellow_sc = 0;
+
+        scores_ref.set({ // Set database scores back to 0 : 0
+            yellow_sc: 0,
+            black_sc: 0
+          });
+
+        var yellow_sc = 0; // Initialize local score variables
         var black_sc  = 0;
-        scores_ref.get().then(function(doc) {
-            if (doc.exists) {
-                yellow_sc = doc.data().black_sc;
-                black_sc = doc.data().yellow_sc;
-            } else {
-                console.log("We fucked up!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
+
         
         var score_history = [];
         var last_to_score = null;
@@ -43,9 +40,41 @@ var uid = null
 
         // Scoring goals
 
+        scores_ref.onSnapshot(function(doc) {
+            scores_ref.get().then(function(doc) {
+                if (doc.exists) {
+                    yellow_sc = doc.data().yellow_sc;
+                    black_sc = doc.data().black_sc;
+                    scoretable.innerHTML = yellow_sc + " : " + black_sc;
+                } else {
+                    console.log("We fucked up!");
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+            });
+
+        function change_scoretable(){
+            scores_ref.get().then(function(doc) {
+                if (doc.exists) {
+                    black_sc = doc.data().black_sc;
+                    yellow_sc = doc.data().yellow_sc;
+                } else {
+                    console.log("We fucked up!");
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+            scoretable.innerHTML = yellow_sc + " : " + black_sc;
+            }
+
         y_button.onclick = function() {
             yellow_sc += 1;
-            scoretable.innerHTML = yellow_sc + " : " + black_sc;
+            db.collection("score_current_game").doc('scores').set({
+                yellow_sc: yellow_sc,
+                black_sc: black_sc
+              });
+            // change_scoretable() implicitly by the onSnapshot listening for changes in the DB
             score_history.push("y");
             if(is_game_over()){
                 display_popup("Yellow")
@@ -54,7 +83,11 @@ var uid = null
 
         b_button.onclick = function() {
             black_sc += 1;
-            scoretable.innerHTML = yellow_sc + " : " + black_sc;
+            db.collection("score_current_game").doc('scores').set({
+                yellow_sc: yellow_sc,
+                black_sc: black_sc
+              });
+            change_scoretable()
             score_history.push("b");
             if(is_game_over()){
                 display_popup("Black")
