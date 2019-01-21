@@ -19,6 +19,12 @@ var uid = null
                     if (doc.data().has_game_page_been_exited == false) {
                         console.log("Can't choose players now.")
                         game_in_progress_popup.style.display = "block";
+                        players_ref.where('uid', '==', user.uid).get().then((snapshot) => { // check if user is in the current players DB 
+                            if (snapshot.docs.length > 0) { // Redirect players to game page
+                                window.location = "game.html"
+                            }
+                        }); 
+            
                     } else {
                         game_in_progress_popup.style.display = "none";
                     }
@@ -33,7 +39,6 @@ var uid = null
             var black_1_btn = document.getElementById("black_1");
             var black_2_btn = document.getElementById("black_2");
             var start_btn = document.getElementById("start")
-
 
             // Sign-ups
 
@@ -152,8 +157,6 @@ var uid = null
                 });
             });
 
-
-
             // ---end of sign-ups---
 
 
@@ -161,19 +164,20 @@ var uid = null
 
             start_btn.onclick = function() {
                 console.log("Go crazy!")
-                location.href='game.html';
-
+                
                 booleans_ref.update({ // Set start of game, triggers players to go to game.html
                     has_game_ended: false, // and everyone else to be informed there is a game in progress
                     has_game_started: true,
                     has_game_page_been_exited: false
-                  });
-
+                }).then(function() {
+                    location.href='game.html';
+                })
+                
                 scores_ref.update({ // Set database scores back to 0 : 0 before game starts
                     yellow_sc: 0,
                     black_sc: 0
                 });
-                  
+                
             };
 
             // ---Events triggered from start of game---
