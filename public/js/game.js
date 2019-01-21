@@ -30,6 +30,19 @@ var uid = null
         var black_2 = document.getElementById("b_2_name");
         
 
+        players_ref.get().then((snapshot) => { // update player names in HTML, kick out if not a player
+            am_I_playing = false
+            snapshot.docs.forEach(doc => {
+                if (user.uid == doc.id) {
+                    am_I_playing = true
+                }
+            })
+            // if (am_I_playing == false) {
+            //     window.location = "waiting_area.html"
+            // }
+        });
+
+
         players_ref.get().then((snapshot) => { // update player names in HTML
             snapshot.docs.forEach(doc => {
                 name = get_first_name(doc.data().name)
@@ -37,7 +50,7 @@ var uid = null
                     name = ""
                 }
                 eval(doc.id + ".innerHTML = '" + name + "' ")
-            })
+            })  
         });
         
         // Game starts
@@ -145,18 +158,23 @@ var uid = null
         // Checking status of game
 
         function update_game_status() {
-            if (((yellow_sc == 10 && black_sc <=8) || (yellow_sc > 10 && (yellow_sc - black_sc == 2)) ) || ((black_sc == 10 && yellow_sc <=8) || (black_sc > 10 && (black_sc - yellow_sc == 2)) )) {
-                booleans_ref.update({
-                    has_game_ended: true,
-                    has_game_started: false
-                });            
-                console.log("has_game_ended was bitched")
-            } else {
-                booleans_ref.update({
-                    has_game_ended: false,
-                    has_game_started: true
-                });            
-            }
+            scores_ref.get().then((doc) => {
+                y_sc = doc.data().yellow_sc
+                b_sc = doc.data().black_sc
+                if (((y_sc == 10 && b_sc <=8) || (y_sc > 10 && (y_sc - b_sc == 2)) ) || 
+                    ((b_sc == 10 && yellow_sc <=8) || (b_sc > 10 && (b_sc - y_sc == 2)) )) {
+                    booleans_ref.update({
+                        has_game_ended: true,
+                        has_game_started: false
+                    });            
+                    console.log("Terminal game result")
+                } else {
+                    booleans_ref.update({
+                        has_game_ended: false,
+                        has_game_started: true
+                    });            
+                }
+            })
         };
 
         function is_game_over() {
