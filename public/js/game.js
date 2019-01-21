@@ -64,9 +64,20 @@ var uid = null
                     yellow_sc = doc.data().yellow_sc;
                     black_sc = doc.data().black_sc;
                     scoretable.innerHTML = yellow_sc + " : " + black_sc;
-                    if (yellow_sc >= 10 || black_sc >= 10){ //TODO see if this works
-                        scoretable.style.fontSize = "50px";//window.innerWidth * 0.35;
-                        console.log("HI");
+                    var min;
+                    if (window.innerWidth < window.innerHeight){
+                        min = window.innerWidth;
+                    } else{
+                        min = window.innerHeight;
+                    }
+
+                    if (yellow_sc >= 10 || black_sc >= 10){ // sizing the scoretext right
+                        scoretable.style.fontSize = (min * 0.25) + "" + "px";
+                        console.log(scoretable.style.fontSize + "MEWMEWMEW");
+                    }
+                    if  (yellow_sc < 10 && black_sc < 10){ //TODO see if this works
+                        scoretable.style.fontSize = (min * 0.5) + "" + "px";
+                        console.log(scoretable.style.fontSize + "MEWMEWMEW");
                     }
 
                 } else {
