@@ -1,2 +1,70 @@
-#button_div{
+.btn-yellow { 
+	/*margin: 10px;*/
+	width: 45vw;
+	height: 42vh;
+	margin: 5px;
+} 
+.btn-black { 
+	/*margin: 10px;*/
+	width: 45vw;
+	height: 42vh;
+} 
+
+body {
+	text-align:center;
+}
+
+#start{
+	position:relative;
+	top: -50vh;
+}
+
+
+
+.btn-start { 
+  color: #000; 
+  background-color: #F0F0F0; 
+  border-color: #F0F0F0;
+  border-radius: 10px;
+  height: 20vh; 
+  width: 30vw;
+} 
+.btn-start:hover, 
+.btn-start:focus, 
+.btn-start:active, 
+.btn-start.active, 
+.open .dropdown-toggle.btn-start { 
+  color: #000; 
+  background-color: #D4D0D9; 
+  border-color: #D4D0D9; 
+} 
+ 
+.btn-start:active, 
+.btn-start.active, 
+.open .dropdown-toggle.btn-start { 
+  background-image: none; 
+} 
+ 
+.btn-start.disabled, 
+.btn-start[disabled], 
+fieldset[disabled] .btn-start, 
+.btn-start.disabled:hover, 
+.btn-start[disabled]:hover, 
+fieldset[disabled] .btn-start:hover, 
+.btn-start.disabled:focus, 
+.btn-start[disabled]:focus, 
+fieldset[disabled] .btn-start:focus, 
+.btn-start.disabled:active, 
+.btn-start[disabled]:active, 
+fieldset[disabled] .btn-start:active, 
+.btn-start.disabled.active, 
+.btn-start[disabled].active, 
+fieldset[disabled] .btn-start.active { 
+  background-color: #F0F0F0; 
+  border-color: #F0F0F0; 
+} 
+ 
+.btn-start .badge { 
+  color: #F0F0F0; 
+  background-color: #F0F0F0; 
 }
