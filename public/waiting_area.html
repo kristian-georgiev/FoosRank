@@ -8,7 +8,8 @@
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <script src="js/setup.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/button.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/waiting_area.css" />
 </head>
 <body>
         <div class="sticky-top" style="padding-bottom: 3px;">            
@@ -19,19 +20,18 @@
                         <a class="nav-link active" style="color: #ffa100; font-weight: bold; font-size: 16px;">FoosRank</a>
                     </form>
                 </nav>
-            </div>
-    
-        <div style="background: linear-gradient(to right, black 50%, yellow 50%);">
         </div>
 
-        <button id="yellow_1" type="button" class="btn btn-warning btn-block" >Claim spot!</button>
-        <button id="yellow_2" type="button" class="btn btn-warning btn-block" >Claim spot!</button>
-        <button id="black_1" type="button" class="btn btn-dark btn-block" >Claim spot!</button>
-        <button id="black_2" type="button" class="btn btn-dark btn-block" >Claim spot!</button>
-        <button id="start" type="button" class="btn btn-light btn-block" >Start!</button>
+        <div id="button_div">
+            <button id="yellow_1" type="button" class="btn-yellow" >Claim spot!</button>
+            <button id="yellow_2" type="button" class="btn-yellow" >Claim spot!</button>
+            <button id="black_1" type="button" class="btn-black" >Claim spot!</button>
+            <button id="black_2" type="button" class="btn-black" >Claim spot!</button>
+            <button id="start" type="button" class="btn btn-light btn-block" >Start!</button>
+        </div>
     
         <script src="js/fireBase.js"></script>
-        <script src="js/waiting_area.js"></script>
+        <!-- <script src="js/waiting_area.js"></script> -->
     
 </body>
 </html>
