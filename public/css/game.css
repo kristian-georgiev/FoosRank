@@ -23,9 +23,12 @@
   width: 100vw;
   top: 10vh;
   pointer-events:none; /*this makes it so that you can click through it*/
+  white-space: nowrap;
+  overflow: hidden;
 }
 #message h1 { 
   font-size: 50vmin;
+  /*font-size: 35vmin;*/
 }
 
 #yellow_color {

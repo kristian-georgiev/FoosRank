@@ -47,6 +47,11 @@ var uid = null
                     yellow_sc = doc.data().yellow_sc;
                     black_sc = doc.data().black_sc;
                     scoretable.innerHTML = yellow_sc + " : " + black_sc;
+                    if (yellow_sc >= 10 || black_sc >= 10){ //TODO see if this works
+                        scoretable.style.fontSize = "50px";//window.innerWidth * 0.35;
+                        console.log("HI");
+                    }
+
                 } else {
                     console.log("We fucked up!");
                 }
