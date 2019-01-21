@@ -154,7 +154,7 @@ var uid = null
 
 
 
-            // ---end of sign-ups
+            // ---end of sign-ups---
 
 
             // Starting the game

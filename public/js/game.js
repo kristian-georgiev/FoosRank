@@ -7,9 +7,22 @@ db.settings({ timestampsInSnapshots: true });
 var uid = null 
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {  // TODO: only if a player is part of the game
+
         // User is signed in.
         const booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
         const players_ref = db.collection("players_current_game")
+
+
+        // Go back to waiting area when there is no game
+        
+        booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
+            booleans_ref.get().then(function(doc) {
+                if (doc.data().has_game_page_been_exited == true) {
+                    console.log("No game going on now.")
+                    window.location = "waiting_area.html"
+                }
+            })
+        });
 
         var yellow_1 = document.getElementById("y_1_name"); // Player names to be displayed
         var yellow_2 = document.getElementById("y_2_name");
@@ -19,7 +32,11 @@ var uid = null
 
         players_ref.get().then((snapshot) => { // update player names in HTML
             snapshot.docs.forEach(doc => {
-                eval(doc.id + ".innerHTML = '" + doc.data().name + "' ")
+                name = doc.data().name
+                if (name == "Claim spot!") {
+                    name = ""
+                }
+                eval(doc.id + ".innerHTML = '" + name + "' ")
             })
         });
         
@@ -168,52 +185,61 @@ var uid = null
 
         popup_continue.onclick = function() {
             record_game()
-
         };
 
 
         // Record game results - TODO need to update users (be careful of await), unhardcode addGame()
         function record_game(){
-            // TODO clean players_ref after game is finished
-            addGame();
             updatePlayerStats();
+            addGame();
         }
-        }else{
+
+        function addGame(){
+            // adds a new game to games collection in database
+    
+                booleans_ref.update({ // Set end of game, triggers waiting_area.html to be active again
+                has_game_page_been_exited: true
+                });
+            
+                db.collection("games").add({ //TODO hardcoded
+                    black1uid: "temptempuid1",
+                    black2uid: "temptempuid2",
+                    yellow1uid: "temptempuid1",
+                    yellow2uid: "temptempuid2",
+                    black_score: yellow_sc,
+                    yellow_score: black_sc,
+                    is_yellow_winner: (yellow_sc > black_sc)
+                })
+                .then(function(docRef) {
+                    console.log("Game successfully added with ID: ", docRef.id);
+                    window.location = "waiting_area.html"
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+
+                players_ref.get().then((snapshot) => { // Kick out players in the end
+                    snapshot.docs.forEach(doc => {
+                        doc.data().name = "Claim spot!"
+                        eval(doc.id + ".innerHTML = '" + name + "' ")
+                    })
+                });
+
+            }
+    
+        function updatePlayerStats(){
+            // players_ref.update({
+            //     elo: user.uid,
+            // });    
+            }
+    
+
+        } else {
             // redirect to login page
             uid = null;
             window.location.replace("login.html");
         }
 
-        function addGame(){
-        // adds a new game to games collection in database
-
-            booleans_ref.update({ // Set end of game, triggers waiting_area.html to be active again
-                has_game_page_been_exited: false
-            });
-
-            db.collection("games").add({ //TODO hardcoded
-                black1uid: "temptempuid1",
-                black2uid: "temptempuid2",
-                yellow1uid: "temptempuid1",
-                yellow2uid: "temptempuid2",
-                black_score: yellow_sc,
-                yellow_score: black_sc,
-                is_yellow_winner: (yellow_sc > black_sc)
-            })
-            .then(function(docRef) {
-                console.log("Game successfully added with ID: ", docRef.id);
-                window.location = "waiting_area.html"
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
-        }
-
-        function updatePlayerStats(){
-            // players_ref.update({
-            //     elo: user.uid,
-            // });    
-        }
 });
 
 
