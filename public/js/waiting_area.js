@@ -31,8 +31,8 @@ var uid = null
                 })
             });
 
-            db.collection("users").doc(user.uid).get().then((me) => { // display user info in navbar
-                document.getElementById("navbar-id-text").innerHTML = user.displayName + " " + me.data().elo;
+            db.collection("users").doc(user.uid).get().then((me) => { // display user info in navbar    
+                document.getElementById("navbar-id-text").innerHTML = get_first_name(user.displayName) + " " + me.data().elo;
                 })
 
 
@@ -52,7 +52,7 @@ var uid = null
                     if (snapshot.docs.length == 0) { // Player has not signed up for other spots
                         players_ref.doc("yellow_1").update({
                             uid: user.uid,
-                            name: user.displayName
+                            name: get_first_name(user.displayName)
                         });    
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
@@ -72,7 +72,7 @@ var uid = null
                     if (snapshot.docs.length == 0) { // Player has not signed up for other spots
                         players_ref.doc("yellow_2").update({
                             uid: user.uid,
-                            name: user.displayName
+                            name: get_first_name(user.displayName)
                         });    
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
@@ -92,7 +92,7 @@ var uid = null
                     if (snapshot.docs.length == 0) { // Player has not signed up for other spots
                         players_ref.doc("black_1").update({
                             uid: user.uid,
-                            name: user.displayName
+                            name: get_first_name(user.displayName)
                         });    
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
@@ -112,7 +112,7 @@ var uid = null
                     if (snapshot.docs.length == 0) { // Player has not signed up for other spots
                         players_ref.doc("black_2").update({
                             uid: user.uid,
-                            name: user.displayName
+                            name: get_first_name(user.displayName)
                         });    
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
@@ -186,6 +186,13 @@ var uid = null
             };
 
             // ---Events triggered from start of game---
+
+            // Helper functions
+
+            function get_first_name(s) {
+                var sArray = s.split(" ");
+                return sArray[0]
+            };
 
         }else{
             // redirect to login page

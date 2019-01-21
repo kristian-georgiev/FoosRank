@@ -92,3 +92,8 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+#navbar-id-text {
+  position: absolute;
+  right: 0%;
+}
