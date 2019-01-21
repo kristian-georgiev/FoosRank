@@ -25,7 +25,7 @@
   pointer-events:none; /*this makes it so that you can click through it*/
 }
 #message h1 { 
-  font-size: 25vw;
+  font-size: 50vmin;
 }
 
 #yellow_color {
