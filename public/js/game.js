@@ -32,8 +32,8 @@ var uid = null
 
         players_ref.get().then((snapshot) => { // update player names in HTML
             snapshot.docs.forEach(doc => {
-                name = doc.data().name
-                if (name == "Claim spot!") {
+                name = get_first_name(doc.data().name)
+                if (name == "Claim") {
                     name = ""
                 }
                 eval(doc.id + ".innerHTML = '" + name + "' ")
@@ -86,7 +86,6 @@ var uid = null
             scores_ref.get().then((doc) => {
                 scores_ref.update({
                     yellow_sc: doc.data().yellow_sc + 1,
-                    black_sc: doc.data().black_sc,
                     score_history: doc.data().score_history.concat("y")
                 })
             })
@@ -106,7 +105,6 @@ var uid = null
 
             scores_ref.get().then((doc) => {
                 scores_ref.update({
-                    yellow_sc: doc.data().yellow_sc,
                     black_sc: doc.data().black_sc + 1,
                     score_history: doc.data().score_history.concat("b")
                 })
@@ -125,18 +123,21 @@ var uid = null
         // Undoing actions
 
         undo_button.onclick = function() {
-            last_to_score = score_history.pop()
-            if (last_to_score == "y") {
-                yellow_sc -= 1;
-            } 
-            if (last_to_score == "b") {
-                black_sc -= 1;
-            } // implicit skip if there were no more actions
-            scores_ref.update({
-                yellow_sc: yellow_sc,
-                black_sc: black_sc
-              });
-            // change scoretable implicitly
+
+            scores_ref.get().then((doc) => {
+                last_to_score = doc.data().score_history.pop()
+                if (last_to_score == "y") {
+                    scores_ref.update({
+                        yellow_sc: doc.data().yellow_sc - 1
+                    })
+                } 
+                if (last_to_score == "b") {
+                    scores_ref.update({
+                        black_sc: doc.data().black_sc - 1
+                    })
+                }// implicit skip if there were no more actions
+            })
+             // change scoretable implicitly
             update_game_status() // in case it was an undo of a winning goal
         };
 
@@ -248,6 +249,13 @@ var uid = null
                 })
             })
             }
+
+            // Helper functions
+
+            function get_first_name(s) {
+                var sArray = s.split(" ");
+                return sArray[0]
+            };
         
 
         } else {
