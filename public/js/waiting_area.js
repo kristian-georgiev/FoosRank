@@ -9,18 +9,31 @@ var uid = null
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
-            const scores_ref = db.collection("score_current_game").doc("scores"); // DB aliases
-            const booleans_ref = db.collection("booleans_current_game").doc("booleans");    
-            const players_ref = db.collection("players_current_game")
+            const booleans_ref = db.collection("booleans_current_game").doc("booleans");          
+            var game_in_progress_popup = document.getElementById("game_in_progress_popup");
             
+            // Put the modal "Game in progress"
+            
+            booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
+                booleans_ref.get().then(function(doc) {
+                    if (doc.data().has_game_page_been_exited == false) {
+                        console.log("Can't choose players now.")
+                        game_in_progress_popup.style.display = "block";
+                    } else {
+                        game_in_progress_popup.style.display = "none";
+                    }
+                })
+            });
+            
+            const scores_ref = db.collection("score_current_game").doc("scores"); // DB aliases
+            const players_ref = db.collection("players_current_game")
+                        
             var yellow_1_btn = document.getElementById("yellow_1");
             var yellow_2_btn = document.getElementById("yellow_2");
             var black_1_btn = document.getElementById("black_1");
             var black_2_btn = document.getElementById("black_2");
-            var game_in_progress_popup = document.getElementById("game_in_progress_popup");
-            
             var start_btn = document.getElementById("start")
-            
+
 
             // Sign-ups
 
@@ -164,21 +177,6 @@ var uid = null
             };
 
             // ---Events triggered from start of game---
-
-            // Put the modal "Game in progress"
-
-            booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
-                booleans_ref.get().then(function(doc) {
-                    if (doc.data().has_game_page_been_exited == false) {
-                        console.log("Can't choose players now.")
-                        game_in_progress_popup.style.display = "block";
-                    } else {
-                        game_in_progress_popup.style.display = "none";
-                    }
-                })
-            });
-            
-
 
         }else{
             // redirect to login page
