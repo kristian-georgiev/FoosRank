@@ -11,15 +11,19 @@ var uid = null
         const booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
         const players_ref = db.collection("players_current_game")
 
-        var y_1_name = document.getElementById("y_1_name"); // Player names to be displayed
-        var y_2_name = document.getElementById("y_2_name");;
-        var b_1_name = document.getElementById("b_1_name");;
-        var b_2_name = document.getElementById("b_2_name");;
+        var yellow_1 = document.getElementById("y_1_name"); // Player names to be displayed
+        var yellow_2 = document.getElementById("y_2_name");
+        var black_1 = document.getElementById("b_1_name");
+        var black_2 = document.getElementById("b_2_name");
         
 
         players_ref.get().then((snapshot) => { // player names
             snapshot.docs.forEach(doc => {
-                console.log(doc.data().name)
+                console.log(doc.id)
+                // console.log(window[doc.id])
+                eval(doc.id + ".innerHTML = '" + doc.data().name + "' ")
+                // window[doc.id].innerHTML = doc.data().name
+                // console.log(doc.data().name)
             })
         }
 
@@ -117,7 +121,7 @@ var uid = null
         };
 
 
-        
+
 
         // Checking status of game
 
