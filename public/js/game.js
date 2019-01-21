@@ -44,13 +44,7 @@ var uid = null
 
         const scores_ref = db.collection("score_current_game").doc("scores"); // DB alias
 
-        var yellow_sc = 0; // Initialize local score variables
-        var black_sc  = 0;
-
         
-        var score_history = []; // Maintain array of scores to make undoing possible
-        var last_to_score = null;
-
         var yellow_div = document.getElementById("yellow_color"); // Grab elts from page
         var black_div = document.getElementById("black_color");
         var undo_button = document.getElementById("undo");
@@ -73,11 +67,9 @@ var uid = null
 
                     if (yellow_sc >= 10 || black_sc >= 10){ // sizing the scoretext right
                         scoretable.style.fontSize = (min * 0.25) + "" + "px";
-                        console.log(scoretable.style.fontSize + "MEWMEWMEW");
                     }
                     if  (yellow_sc < 10 && black_sc < 10){ //TODO see if this works
                         scoretable.style.fontSize = (min * 0.5) + "" + "px";
-                        console.log(scoretable.style.fontSize + "MEWMEWMEW");
                     }
 
                 } else {
@@ -90,13 +82,16 @@ var uid = null
 
 
         yellow_div.addEventListener('click',function(e){
-            yellow_sc += 1;
-            scores_ref.update({
-                yellow_sc: yellow_sc,
-                black_sc: black_sc
-              });
+
+            scores_ref.get().then((doc) => {
+                scores_ref.update({
+                    yellow_sc: doc.data().yellow_sc + 1,
+                    black_sc: doc.data().black_sc,
+                    score_history: doc.data().score_history.concat("y")
+                })
+            })
+
             // change scoretable implicitly by the onSnapshot listening for changes in the DB
-            score_history.push("y");
             update_game_status();
 
             is_game_over().then(function(result){ // check if game is over after updating score
@@ -109,14 +104,15 @@ var uid = null
 
         black_div.addEventListener('click',function(e){
 
-            black_sc += 1;
-            scores_ref.update({
-                yellow_sc: yellow_sc,
-                black_sc: black_sc
-              });
+            scores_ref.get().then((doc) => {
+                scores_ref.update({
+                    yellow_sc: doc.data().yellow_sc,
+                    black_sc: doc.data().black_sc + 1,
+                    score_history: doc.data().score_history.concat("b")
+                })
+            })
             // change scoretable implicitly
             update_game_status();
-            score_history.push("b");
 
             is_game_over().then(function(result){ // check if game is over after updating score
                 if (result == true) {
@@ -252,19 +248,7 @@ var uid = null
                 })
             })
             }
-    
-        function updatePlayerStats(){
-            players_ref.get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                    var player_uid = doc.data().uid
-                    db.collection("users").doc(player_uid).update({
-                        elo: 1800
-                    })
-
-                })
-            })
-            }
-    
+        
 
         } else {
             // redirect to login page

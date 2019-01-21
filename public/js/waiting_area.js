@@ -30,7 +30,12 @@ var uid = null
                     }
                 })
             });
-            
+
+            db.collection("users").doc(user.uid).get().then((me) => { // display user info in navbar
+                document.getElementById("navbar-id-text").innerHTML = user.displayName + " " + me.data().elo;
+                })
+
+
             const scores_ref = db.collection("score_current_game").doc("scores"); // DB aliases
             const players_ref = db.collection("players_current_game")
                         

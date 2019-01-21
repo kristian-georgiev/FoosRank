@@ -16,6 +16,10 @@ var uid = null // TODO: I don't think this is needed?
 
             });
 
+            db.collection("users").doc(user.uid).get().then((me) => { // display user info in navbar    
+                document.getElementById("navbar-id-text").innerHTML = user.displayName + " " + me.data().elo;
+                })
+
 
         }else{
             // redirect to login page
