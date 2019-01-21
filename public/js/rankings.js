@@ -28,11 +28,7 @@ function createRow(data, table){
 
 async function createTableBase(){ //TODO: see if this is actually async
 	var table = document.getElementById("rankingtable");
-	// await db.collection("users").get().then(function(querySnapshot) {
-	//     querySnapshot.forEach(function(doc) {
-	//         createRow(doc.data(), table);
-	//     });
-	// });
+	
 	await db.collection("users").orderBy("elo","desc").get().then(function(querySnapshot) {
 	    querySnapshot.forEach(function(doc) {
 	        createRow(doc.data(), table);
