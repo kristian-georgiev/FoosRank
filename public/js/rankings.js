@@ -12,6 +12,9 @@ function createRow(data, table){
 		else if (columns[i] == "Name"){
 			var cellText = document.createTextNode(data.name);
 		}
+		else if (columns[i] == "Games Played") {
+			var cellText = document.createTextNode(data.totalgames);
+		}
 		else { // Elo
 			var cellText = document.createTextNode(data.elo);
 		}
@@ -25,7 +28,12 @@ function createRow(data, table){
 
 async function createTableBase(){ //TODO: see if this is actually async
 	var table = document.getElementById("rankingtable");
-	await db.collection("users").get().then(function(querySnapshot) {
+	// await db.collection("users").get().then(function(querySnapshot) {
+	//     querySnapshot.forEach(function(doc) {
+	//         createRow(doc.data(), table);
+	//     });
+	// });
+	await db.collection("users").orderBy("elo","desc").get().then(function(querySnapshot) {
 	    querySnapshot.forEach(function(doc) {
 	        createRow(doc.data(), table);
 	    });
@@ -33,7 +41,7 @@ async function createTableBase(){ //TODO: see if this is actually async
 
 }
 
-var columns = ["Ranking", "Name", "Elo"];
+var columns = ["Ranking", "Name", "Games Played", "Elo"];
 var ranking = 1;
 
 createTableBase();
