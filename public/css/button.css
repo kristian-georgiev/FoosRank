@@ -5,6 +5,7 @@
   color: #FFFFFF; 
   background-color: #FFC128; 
   border-color: #FFC128; 
+  border-radius: 10px;
 } 
  
 .btn-yellow:hover, 
@@ -52,6 +53,7 @@ fieldset[disabled] .btn-yellow.active {
   color: #FFFFFF; 
   background-color: #3F474F; 
   border-color: #3F474F; 
+  border-radius: 10px;
 } 
  
 .btn-black:hover, 
