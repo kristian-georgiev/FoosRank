@@ -5,21 +5,22 @@ db.settings({ timestampsInSnapshots: true });
 
 
 (function(){
-var uid = null // TODO: I don't think this is needed?    
+var uid = null
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
             const scores_ref = db.collection("score_current_game").doc("scores"); // DB aliases
             const booleans_ref = db.collection("booleans_current_game").doc("booleans");    
             const players_ref = db.collection("players_current_game")
-    
+            
             var yellow_1_btn = document.getElementById("yellow_1");
             var yellow_2_btn = document.getElementById("yellow_2");
             var black_1_btn = document.getElementById("black_1");
             var black_2_btn = document.getElementById("black_2");
-
+            var game_in_progress_popup = document.getElementById("game_in_progress_popup");
+            
             var start_btn = document.getElementById("start")
-    
+            
 
             // Sign-ups
 
@@ -151,7 +152,8 @@ var uid = null // TODO: I don't think this is needed?
 
                 booleans_ref.update({ // Set start of game, triggers players to go to game.html
                     has_game_ended: false, // and everyone else to be informed there is a game in progress
-                    has_game_started: true
+                    has_game_started: true,
+                    has_game_page_been_exited: false
                   });
 
                 scores_ref.update({ // Set database scores back to 0 : 0 before game starts
@@ -161,18 +163,19 @@ var uid = null // TODO: I don't think this is needed?
                   
             };
 
-            // Events triggered from start of game
+            // ---Events triggered from start of game---
+
+            // Put the modal "Game in progress"
 
             booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
                 booleans_ref.get().then(function(doc) {
-                    if (doc.exists) {
-                        if (doc.data().has_game_started == true) {
-                            start_btn.innerHTML = "Game in progress"
-                        } 
+                    if (doc.data().has_game_page_been_exited == false) {
+                        console.log("Can't choose players now.")
+                        game_in_progress_popup.style.display = "block";
                     } else {
-                        console.log("We fucked up!");
+                        game_in_progress_popup.style.display = "none";
                     }
-                });
+                })
             });
             
 

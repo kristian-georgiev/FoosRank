@@ -17,17 +17,11 @@ var uid = null
         var black_2 = document.getElementById("b_2_name");
         
 
-        players_ref.get().then((snapshot) => { // player names
+        players_ref.get().then((snapshot) => { // update player names in HTML
             snapshot.docs.forEach(doc => {
-                console.log(doc.id)
-                // console.log(window[doc.id])
                 eval(doc.id + ".innerHTML = '" + doc.data().name + "' ")
-                // window[doc.id].innerHTML = doc.data().name
-                // console.log(doc.data().name)
             })
-        }
-
-        );
+        });
         
         // Game starts
 
@@ -40,8 +34,8 @@ var uid = null
         var score_history = []; // Maintain array of scores to make undoing possible
         var last_to_score = null;
 
-        var y_button = document.getElementById("yellow_score"); // Grab elts from page
-        var b_button = document.getElementById("black_score");
+        var yellow_div = document.getElementById("yellow_color"); // Grab elts from page
+        var black_div = document.getElementById("black_color");
         var undo_button = document.getElementById("undo");
         var scoretable = document.getElementById("scoretable");
 
@@ -61,17 +55,14 @@ var uid = null
             });
         });
 
-        var yellow_div = document.getElementById("yellow_color");;
-        var black_div = document.getElementById("black_color");;
 
         yellow_div.addEventListener('click',function(e){
-
             yellow_sc += 1;
             scores_ref.update({
                 yellow_sc: yellow_sc,
                 black_sc: black_sc
               });
-            // change_scoretable() implicitly by the onSnapshot listening for changes in the DB
+            // change scoretable implicitly by the onSnapshot listening for changes in the DB
             score_history.push("y");
             update_game_status();
 
@@ -119,8 +110,6 @@ var uid = null
             // change scoretable implicitly
             update_game_status() // in case it was an undo of a winning goal
         };
-
-
 
 
         // Checking status of game
@@ -197,22 +186,27 @@ var uid = null
 
         function addGame(){
         // adds a new game to games collection in database
-                    db.collection("games").add({ //TODO hardcoded
-                        black1uid: "temptempuid1",
-                        black2uid: "temptempuid2",
-                        yellow1uid: "temptempuid1",
-                        yellow2uid: "temptempuid2",
-                        black_score: yellow_sc,
-                        yellow_score: black_sc,
-                        is_yellow_winner: (yellow_sc > black_sc)
-                    })
-                    .then(function(docRef) {
-                        console.log("Game successfully added with ID: ", docRef.id);
-                        window.location = "waiting_area.html"
-                    })
-                    .catch(function(error) {
-                        console.error("Error adding document: ", error);
-                    });
+
+            booleans_ref.update({ // Set end of game, triggers waiting_area.html to be active again
+                has_game_page_been_exited: false
+            });
+
+            db.collection("games").add({ //TODO hardcoded
+                black1uid: "temptempuid1",
+                black2uid: "temptempuid2",
+                yellow1uid: "temptempuid1",
+                yellow2uid: "temptempuid2",
+                black_score: yellow_sc,
+                yellow_score: black_sc,
+                is_yellow_winner: (yellow_sc > black_sc)
+            })
+            .then(function(docRef) {
+                console.log("Game successfully added with ID: ", docRef.id);
+                window.location = "waiting_area.html"
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
         }
 
         function updatePlayerStats(){

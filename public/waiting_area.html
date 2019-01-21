@@ -29,9 +29,16 @@
             <button id="black_2" type="button" class="btn-black" >Claim spot!</button>
             <button id="start" type="button" class="btn btn-light btn-block" >Start!</button>
         </div>
-    
+
+        <div id="game_in_progress_popup" class="modal">
+                <div class="modal-content">
+                  <div id="popup_text" style="text-align:center"> </div>
+                  <button id="popup_continue" type="button" onclick="location.href='main.html';" class="btn btn-primary">Go Back</button>
+                </div>
+              </div>
+          
         <script src="js/fireBase.js"></script>
-        <!-- <script src="js/waiting_area.js"></script> -->
+        <script src="js/waiting_area.js"></script>
     
 </body>
 </html>
