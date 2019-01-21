@@ -8,6 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/rankings.css" />
 </head>
 <body>
         <div style=" height: 15vh" >            
@@ -23,9 +24,23 @@
     
     <div class="container-fluid">    
         <button type="button" onclick="location.href='waiting_area.html';" class="btn btn-danger btn-block">Play!</button>
-        <button type="button" onclick="location.href='rankings.html';" class="btn btn-primary btn-block">Rankings</button>
         <button type="button" onclick="location.href='my_matches.html';" class="btn btn-primary btn-block">My matches</button>
         <button type="button" class="btn btn-light btn-block" onclick="mainApp.logOut()">Log Out</button>
+    </div>
+
+    <div id="rankingtablediv">
+        <table class="table" id="rankingtable">
+          <thead>
+            <tr>
+              <th scope="col">Ranking</th>
+              <th scope="col">Name</th>
+              <th scope="col">Games Plаyed</th>
+              <th scope="col">Elo</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
     </div>
 
     <script src="js/fireBase.js"></script>

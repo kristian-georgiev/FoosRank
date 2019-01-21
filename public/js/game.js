@@ -6,8 +6,7 @@ db.settings({ timestampsInSnapshots: true });
 (function(){
 var uid = null 
     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {  // TODO: only if a player is part of the game
-
+        if (user) {  
         // User is signed in.
         const booleans_ref = db.collection("booleans_current_game").doc("booleans"); // DB aliases
         const players_ref = db.collection("players_current_game")
