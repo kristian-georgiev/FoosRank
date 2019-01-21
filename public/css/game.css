@@ -11,7 +11,7 @@
 
 #message { 
   width: 100vw;
-  height: 100vh;
+  height: 85vh;
   margin: 0px; 
   border-radius: 3px; 
   position: relative;
@@ -31,13 +31,13 @@
 #yellow_color {
   position:absolute;
   width:50vw;
-  height: 100vh;
+  height: 85vh;
   background-color: #FFD133;
 }
 #black_color {
   position:absolute;
   width:50vw;
-  height: 100vh;
+  height: 85vh;
   left: 50vw;
   background-color: #000000;
 }
