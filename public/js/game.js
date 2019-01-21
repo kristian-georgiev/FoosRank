@@ -206,17 +206,28 @@ var uid = null
 
         // Record game results - TODO need to update users (be careful of await), unhardcode addGame()
         function record_game(){
-            updatePlayerStats();
+            // updatePlayerStats() 
             addGame();
+            // updatePlayerStats().then(() => {
+            //     addGame();
+            // });
         }
 
         function addGame(){
             // adds a new game to games collection in database
-    
-                booleans_ref.update({ // Set end of game, triggers waiting_area.html to be active again
-                has_game_page_been_exited: true
-                });
-            
+                
+            players_ref.get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    var player_uid = doc.data().uid
+                    if (player_uid != "") {
+                        db.collection("users").doc(player_uid).get().then((doc) => {
+                            db.collection("users").doc(player_uid).update({
+                                elo: doc.data().elo + 100
+                            })
+                        })
+                    }
+                })
+            }).then(() => {
                 db.collection("games").add({ //TODO hardcoded
                     black1uid: "temptempuid1",
                     black2uid: "temptempuid2",
@@ -225,28 +236,33 @@ var uid = null
                     black_score: yellow_sc,
                     yellow_score: black_sc,
                     is_yellow_winner: (yellow_sc > black_sc)
+                }).then(() => {
+                    players_ref.get().then((snapshot) => { // Kick out players in the end
+                        snapshot.docs.forEach(doc => {
+                            doc.data().name = "Claim spot!"
+                            doc.data().uid = ""
+                            console.log("Kicked out players.")
+                        })
+                    }).then(() => {
+                        // console.log("ebete si maikite")
+                        booleans_ref.update({ // Set end of game, triggers waiting_area.html to be active again
+                            has_game_page_been_exited: true
+                        });
+                    });
                 })
-                .then(function(docRef) {
-                    console.log("Game successfully added with ID: ", docRef.id);
-                    window.location = "waiting_area.html"
-                })
-                .catch(function(error) {
-                    console.error("Error adding document: ", error);
-                });
-
-                players_ref.get().then((snapshot) => { // Kick out players in the end
-                    snapshot.docs.forEach(doc => {
-                        doc.data().name = "Claim spot!"
-                        eval(doc.id + ".innerHTML = '" + name + "' ")
-                    })
-                });
-
+            })
             }
     
         function updatePlayerStats(){
-            // players_ref.update({
-            //     elo: user.uid,
-            // });    
+            players_ref.get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                    var player_uid = doc.data().uid
+                    db.collection("users").doc(player_uid).update({
+                        elo: 1800
+                    })
+
+                })
+            })
             }
     
 
