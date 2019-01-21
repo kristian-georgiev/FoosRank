@@ -21,7 +21,7 @@
 .scorenumberdiv {
   position: absolute;
   width: 100vw;
-  top: 25vh;
+  top: 10vh;
   pointer-events:none; /*this makes it so that you can click through it*/
 }
 #message h1 { 
