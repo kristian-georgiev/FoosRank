@@ -12,20 +12,19 @@
 </head>
 <body>
         <div style=" height: 15vh" >            
-                <nav class="navbar navbar-light bg-light" class="-webkit-box-shadow: 0 8px 6px -6px #999;
+            <nav class="navbar navbar-light bg-light" class="-webkit-box-shadow: 0 8px 6px -6px #999;
                 -moz-box-shadow: 0 8px 6px -6px #999;
                 box-shadow: 0 8px 6px -6px #999;">
-                    <form class="form-inline">
-                        <a class="nav-link active" href="main.html" style="color: #ffa100; font-weight: bold; font-size: 16px;">FoosRank</a>
-                        <a id="navbar-id-text" class="nav-link" style="color: grey; font-size: 16px; text-align: right;">user info</a>
-                    </form>
-                </nav>
+                    <a class="navbar-brand" href="main.html" style="color: #ffa100; font-weight: bold; font-size: 16px;">FoosRank</a>
+                    <a class="ml-auto">
+                        <a id="navbar-id-text" class="nav-link" style="color: #ffa100;" href="playerprofile.html">User</a>
+                    </a>
+
+            </nav>
         </div>
     
     <div class="container-fluid">    
-        <button type="button" onclick="location.href='waiting_area.html';" class="btn btn-danger btn-block">Play!</button>
-        <button type="button" onclick="location.href='my_matches.html';" class="btn btn-primary btn-block">My matches</button>
-        <button type="button" class="btn btn-light btn-block" onclick="mainApp.logOut()">Log Out</button>
+        <button type="button" onclick="location.href='waiting_area.html';" class="btn btn-block btn-warning">Play!</button>
     </div>
 
     <div id="rankingtablediv">
@@ -34,7 +33,7 @@
             <tr>
               <th scope="col">Ranking</th>
               <th scope="col">Name</th>
-              <th scope="col">Games Plаyed</th>
+              <th scope="col">Games</th>
               <th scope="col">Elo</th>
             </tr>
           </thead>
@@ -42,6 +41,8 @@
           </tbody>
         </table>
     </div>
+    <button type="button" class="btn btn-outline-danger btn-block" onclick="mainApp.logOut()">Log Out</button>
+
 
     <script src="js/fireBase.js"></script>
     <script src="js/main.js"></script>
