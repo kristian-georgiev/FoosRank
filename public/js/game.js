@@ -30,19 +30,19 @@ var uid = null
         var black_2 = document.getElementById("b_2_name");
         
 
-        // TODO:
-        players_ref.get().then((snapshot) => { // kick out if not a player
-            am_I_playing = false
-            snapshot.docs.forEach(doc => {
-                if (user.uid == doc.id) {
-                    am_I_playing = true
-                }
-                return am_I_playing
-            }).then(console.log(am_I_playing))
-            // if (am_I_playing == false) {
-            //     window.location = "waiting_area.html"
-            // }
-        });
+        // // TODO:
+        // players_ref.get().then((snapshot) => { // kick out if not a player
+        //     am_I_playing = false
+        //     snapshot.docs.forEach(doc => {
+        //         if (user.uid == doc.id) {
+        //             am_I_playing = true
+        //         }
+        //         return am_I_playing
+        //     }).then(console.log(am_I_playing))
+        //     // if (am_I_playing == false) {
+        //     //     window.location = "waiting_area.html"
+        //     // }
+        // });
 
 
         players_ref.get().then((snapshot) => { // update player names in HTML
@@ -68,6 +68,47 @@ var uid = null
 
         scores_ref.onSnapshot(function() { // Listen for changes in the scores DB 
             scores_ref.get().then(function(doc) { // and update HTML upon each change
+                if (doc.exists) {
+                    y_sc = doc.data().yellow_sc;
+                    b_sc = doc.data().black_sc;
+                    if (((y_sc == 10 && b_sc <=8) || (y_sc > 10 && (y_sc - b_sc == 2)) ) || 
+                        ((b_sc == 10 && yellow_sc <=8) || (b_sc > 10 && (b_sc - y_sc == 2)) )) {
+                        w = "Yellow"
+                        if (y_sc < b_sc) {
+                            w = "Black"
+                        }
+                        booleans_ref.update({
+                            has_game_ended: true,
+                            has_game_started: false,
+                            winner: w
+                        });            
+                        console.log("Terminal game result");
+                    } else {
+                        booleans_ref.update({
+                            has_game_ended: false,
+                            has_game_started: true,
+                            winner: w
+                        });            
+                    }
+
+                } else {
+                    console.log("We fucked up!");
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });
+        });
+
+        booleans_ref.onSnapshot(function () {
+            booleans_ref.get().then(doc => {
+                if (doc.data().has_game_ended == true) {
+                    display_popup(doc.data().winner);
+                }
+            } )
+        });
+
+        scores_ref.onSnapshot(function() { // Listen for changes in the scores DB 
+            scores_ref.get().then(function(doc) { // and update game status if necessary    
                 if (doc.exists) {
                     yellow_sc = doc.data().yellow_sc;
                     black_sc = doc.data().black_sc;
@@ -251,7 +292,7 @@ var uid = null
         // }
 
         function record_game(){
-            // adds a new game to games collection in database
+            // adds a new game to games collection in databasek
                 
             players_ref.get().then((snapshot) => {
                 snapshot.docs.forEach(doc => {

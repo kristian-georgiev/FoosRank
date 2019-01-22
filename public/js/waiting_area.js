@@ -181,7 +181,8 @@ var uid = null
                 scores_ref.update({ // Set database scores back to 0 : 0 before game starts
                     yellow_sc: 0,
                     black_sc: 0,
-                    score_history: []
+                    score_history: [],
+                    winner: ""
                 });
                 
             };

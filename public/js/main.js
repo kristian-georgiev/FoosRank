@@ -19,8 +19,8 @@ var uid = null // TODO: I don't think this is needed?
             });
 
             db.collection("users").doc(user.uid).get().then((me) => { // display user info in navbar    
-                document.getElementById("navbar-id-text").innerHTML = user.displayName + " " + me.data().elo;
-            });
+                document.getElementById("navbar-id-text").innerHTML = get_first_name(user.displayName) + " " + me.data().elo;
+                })
 
             function createRow(data, table){
                 var row = document.createElement("tr");
@@ -62,6 +62,13 @@ var uid = null // TODO: I don't think this is needed?
             var ranking = 1;
 
             createTableBase();
+
+            // Helper functions
+
+            function get_first_name(s) {
+                var sArray = s.split(" ");
+                return sArray[0]
+            };
 
 
         }else{
