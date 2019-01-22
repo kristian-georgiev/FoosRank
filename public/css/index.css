@@ -1,0 +1,59 @@
+body { 
+  font-family: Roboto, Helvetica, Arial, sans-serif; 
+}
+
+#backgrounddiv {
+	/*background: radial-gradient(at 50% 0%, #98FC4F 8%,  #0F9B24 55%);*/
+	background: radial-gradient(at 50% 0%, #7BE330 80%,  #0F9B24 20%);
+	width:100vw;
+	height:100vh;
+	position: relative;
+
+	display: flex;
+  	justify-content: center;
+}
+
+#foosrank {
+	position:absolute;
+	top:20vh;
+	color: white;
+	font-size:20vmin;
+}
+
+#text {
+	position: absolute;
+	color:white;
+	top:45vh;
+	font-size: 4vmin;
+}
+
+#foosrankbutton {
+	position: absolute;
+	top:70vh;
+}
+
+#github {
+  	position: absolute;
+	top:80vh;
+}
+
+a:visited{
+  color:black;
+}
+a:link{
+  color:black;
+}
+
+@media (max-width: 450px) {
+  body, #text { 
+  	top:35vh;
+  	font-size: 5vmin;
+  }
+  body, #foosrankbutton {
+  	top:60vh;
+  }
+  body, #github {
+  	top:70vh;
+  }
+
+}
