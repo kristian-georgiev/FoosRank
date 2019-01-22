@@ -33,7 +33,7 @@ var uid = null // TODO: I don't think this is needed?
                     else if (columns[i] == "Name"){
                         var cellText = document.createTextNode(data.name);
                     }
-                    else if (columns[i] == "Games Played") {
+                    else if (columns[i] == "Games") {
                         var cellText = document.createTextNode(data.totalgames);
                     }
                     else { // Elo
@@ -58,7 +58,7 @@ var uid = null // TODO: I don't think this is needed?
 
             }
 
-            var columns = ["Ranking", "Name", "Games Played", "Elo"];
+            var columns = ["Ranking", "Name", "Elo", "Games"];
             var ranking = 1;
 
             createTableBase();
