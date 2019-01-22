@@ -21,7 +21,7 @@ var uid = null
                         game_in_progress_popup.style.display = "block";
                         players_ref.where('uid', '==', user.uid).get().then((snapshot) => { // check if user is in the current players DB 
                             if (snapshot.docs.length > 0) { // Redirect players to game page
-                                window.location = "game.html"
+                                window.location.replace("game.html");
                             }
                         }); 
             
@@ -175,7 +175,7 @@ var uid = null
                     has_game_started: true,
                     has_game_page_been_exited: false
                 }).then(function() {
-                    location.href='game.html';
+                    window.location.replace('game.html');
                 })
                 
                 scores_ref.update({ // Set database scores back to 0 : 0 before game starts

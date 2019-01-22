@@ -19,7 +19,7 @@ var uid = null
             booleans_ref.get().then(function(doc) {
                 if (doc.data().has_game_page_been_exited == true) {
                     console.log("No game going on now.")
-                    window.location = "waiting_area.html"
+                    window.location.replace("waiting_area.html")
                 }
             })
         });
