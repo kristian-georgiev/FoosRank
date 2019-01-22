@@ -3,6 +3,7 @@ var firebase = app_fireBase;
 const db = firebase.firestore();
 db.settings({ timestampsInSnapshots: true });
 
+
 (function(){
 var uid = null 
     firebase.auth().onAuthStateChanged(function(user) {
@@ -29,13 +30,15 @@ var uid = null
         var black_2 = document.getElementById("b_2_name");
         
 
-        players_ref.get().then((snapshot) => { // update player names in HTML, kick out if not a player
+        // TODO:
+        players_ref.get().then((snapshot) => { // kick out if not a player
             am_I_playing = false
             snapshot.docs.forEach(doc => {
                 if (user.uid == doc.id) {
                     am_I_playing = true
                 }
-            })
+                return am_I_playing
+            }).then(console.log(am_I_playing))
             // if (am_I_playing == false) {
             //     window.location = "waiting_area.html"
             // }
@@ -55,7 +58,6 @@ var uid = null
         // Game starts
 
         const scores_ref = db.collection("score_current_game").doc("scores"); // DB alias
-
         
         var yellow_div = document.getElementById("yellow_color"); // Grab elts from page
         var black_div = document.getElementById("black_color");
@@ -100,10 +102,10 @@ var uid = null
                     yellow_sc: doc.data().yellow_sc + 1,
                     score_history: doc.data().score_history.concat("y")
                 })
-            })
-
-            // change scoretable implicitly by the onSnapshot listening for changes in the DB
-            update_game_status();
+            }).then(() => {
+                // change scoretable implicitly by the onSnapshot listening for changes in the DB
+                update_game_status();
+            });
 
             is_game_over().then(function(result){ // check if game is over after updating score
                 if (result == true) {
@@ -115,21 +117,27 @@ var uid = null
 
         black_div.addEventListener('click',function(e){
 
-            scores_ref.get().then((doc) => {
-                scores_ref.update({
-                    black_sc: doc.data().black_sc + 1,
-                    score_history: doc.data().score_history.concat("b")
+            scores_ref.get()
+                .then((doc) => {
+                    scores_ref.update({
+                        black_sc: doc.data().black_sc + 1,
+                        score_history: doc.data().score_history.concat("b")
+                    })
+                    return 0
                 })
-            })
-            // change scoretable implicitly
-            update_game_status();
-
-            is_game_over().then(function(result){ // check if game is over after updating score
-                if (result == true) {
-                    display_popup("Black");
-                }
-
-            })
+                .then( t => {
+                    // change scoretable implicitly
+                    update_game_status();
+                    return 0
+                })
+                .then( t => {    
+                    return is_game_over()
+                })
+                .then(result => { // check if game is over after updating score
+                    if (result == true) {
+                        display_popup("Black");
+                    }
+                });
         });
 
         // Undoing actions
@@ -138,14 +146,18 @@ var uid = null
 
             scores_ref.get().then((doc) => {
                 last_to_score = doc.data().score_history.pop()
+                sc_hist = doc.data().score_history
+                sc_hist.pop()
                 if (last_to_score == "y") {
                     scores_ref.update({
-                        yellow_sc: doc.data().yellow_sc - 1
+                        yellow_sc: doc.data().yellow_sc - 1,
+                        score_history: sc_hist
                     })
                 } 
                 if (last_to_score == "b") {
                     scores_ref.update({
-                        black_sc: doc.data().black_sc - 1
+                        black_sc: doc.data().black_sc - 1,
+                        score_history: sc_hist
                     })
                 }// implicit skip if there were no more actions
             })
@@ -202,15 +214,26 @@ var uid = null
         };
 
         popup_undo.onclick = function() {
-            last_to_score = score_history.pop()
-            if (last_to_score == "y") {
-                yellow_sc -= 1;
-            } 
-            if (last_to_score == "b") {
-                black_sc -= 1;
-            }
-            scoretable.innerHTML = yellow_sc + " : " + black_sc;
-            popup.style.display = "none";
+            scores_ref.get().then((doc) => {
+                last_to_score = doc.data().score_history.pop()
+                sc_hist = doc.data().score_history
+                sc_hist.pop()
+                if (last_to_score == "y") {
+                    scores_ref.update({
+                        yellow_sc: doc.data().yellow_sc - 1,
+                        score_history: sc_hist
+                    })
+                } 
+                if (last_to_score == "b") {
+                    scores_ref.update({
+                        black_sc: doc.data().black_sc - 1,
+                        score_history: sc_hist
+                    })
+                }// implicit skip if there were no more actions
+            })
+             // change scoretable implicitly
+             update_game_status() // in case it was an undo of a winning goal
+             popup.style.display = "none";
         };
 
         popup_continue.onclick = function() {
@@ -218,16 +241,16 @@ var uid = null
         };
 
 
-        // Record game results - TODO need to update users (be careful of await), unhardcode addGame()
-        function record_game(){
-            // updatePlayerStats() 
-            addGame();
-            // updatePlayerStats().then(() => {
-            //     addGame();
-            // });
-        }
+        // // Record game results - TODO need to update users (be careful of await), unhardcode addGame()
+        // function record_game(){
+        //     // updatePlayerStats() 
+        //     addGame();
+        //     // updatePlayerStats().then(() => {
+        //     //     addGame();
+        //     // });
+        // }
 
-        function addGame(){
+        function record_game(){
             // adds a new game to games collection in database
                 
             players_ref.get().then((snapshot) => {
