@@ -50,6 +50,7 @@ db.settings({ timestampsInSnapshots: true });
                             has_game_page_been_exited: true,
                             has_game_started: false,
                             is_ready_to_record_game: false,
+                            start_button_enabled: false,
                             winner: ""
                         }).then(function () {
                             scores_ref.update({ // clean game result
@@ -237,6 +238,7 @@ db.settings({ timestampsInSnapshots: true });
                                                                                     has_game_page_been_exited: true,
                                                                                     has_game_started: false,
                                                                                     is_ready_to_record_game: false,
+                                                                                    start_button_enabled: false,
                                                                                     winner: ""
                                                                                 }).then(function () {
                                                                                     scores_ref.update({ // clean game result
