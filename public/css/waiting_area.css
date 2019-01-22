@@ -54,8 +54,8 @@ fieldset[disabled] .btn-start:active,
 .btn-start.disabled.active, 
 .btn-start[disabled].active, 
 fieldset[disabled] .btn-start.active { 
-  background-color: #27D155; 
-  border-color: #27D155; 
+  background-color: rgb(117, 211, 142); 
+  border-color: rgb(117, 211, 142); 
 } 
  
 .btn-start .badge { 

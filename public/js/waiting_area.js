@@ -21,10 +21,8 @@ var uid = null
             var black_1_btn = document.getElementById("black_1");
             var black_2_btn = document.getElementById("black_2");
             var start_btn = document.getElementById("start")
-            // Put the modal "Game in progress"
-
             start_btn.disabled = true;
-            start_btn.classList.add('disabled');
+            // Put the modal "Game in progress"
 
            
             booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
@@ -57,14 +55,14 @@ var uid = null
                         players_ref.doc("yellow_1").update({
                             uid: user.uid,
                             name: get_first_name(user.displayName)
-                        });    
+                        }).then( p => toggle_start_button());
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "yellow_1") {
                                 players_ref.doc("yellow_1").update({
                                     uid: "none",
                                     name: "Claim spot!"
-                                });            
+                                }).then( p => toggle_start_button());     
                             };
                         });
                     };
@@ -77,14 +75,14 @@ var uid = null
                         players_ref.doc("yellow_2").update({
                             uid: user.uid,
                             name: get_first_name(user.displayName)
-                        });    
+                        }).then( p => toggle_start_button());
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "yellow_2") {
                                 players_ref.doc("yellow_2").update({
                                     uid: "none",
                                     name: "Claim spot!"
-                                });            
+                                }).then( p => toggle_start_button());          
                             };
                         });
                     };
@@ -97,14 +95,14 @@ var uid = null
                         players_ref.doc("black_1").update({
                             uid: user.uid,
                             name: get_first_name(user.displayName)
-                        });    
+                        }).then( p => toggle_start_button());
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "black_1") {
                                 players_ref.doc("black_1").update({
                                     uid: "none",
                                     name: "Claim spot!"
-                                });            
+                                }).then( p => toggle_start_button()); 
                             };
                         });
                     };
@@ -117,14 +115,14 @@ var uid = null
                         players_ref.doc("black_2").update({
                             uid: user.uid,
                             name: get_first_name(user.displayName)
-                        });    
+                        }).then( p => toggle_start_button());
                     } else { // If player has signed up for that spot, free it with the second click
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "black_2") {
                                 players_ref.doc("black_2").update({
                                     uid: "none",
                                     name: "Claim spot!"
-                                });            
+                                }).then( p => toggle_start_button());
                             };
                         });
                     };
@@ -190,6 +188,33 @@ var uid = null
                         window.location.replace('game.html');
                     });
             }
+
+            // Enable/disable start button
+
+            function toggle_start_button() {
+                if (((yellow_1_btn.innerHTML == yellow_2_btn.innerHTML) && (yellow_1_btn.innerHTML == "Claim spot!")) || // both yellow empty
+                ((black_1_btn.innerHTML == black_2_btn.innerHTML) && (black_1_btn.innerHTML == "Claim spot!"))) { // both black empty
+                    booleans_ref.update({
+                        start_button_enabled: false
+                    });
+                } else {
+                    booleans_ref.update({
+                        start_button_enabled: true
+                    })
+                }
+            }
+
+            booleans_ref.onSnapshot(function() {  
+                booleans_ref.get().then(doc => {
+                    if (doc.data().start_button_enabled == false) {
+                        start_btn.setAttribute('disabled', 'disabled');
+                        start_btn.disabled = true;
+                    } else {
+                        start_btn.removeAttribute('disabled');
+                        start_btn.disabled = false;
+                        }
+                })
+            })
 
             // ---Events triggered from start of game---
 
