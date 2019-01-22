@@ -9,9 +9,17 @@ var uid = null
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
-            const booleans_ref = db.collection("booleans_current_game").doc("booleans");          
-            var game_in_progress_popup = document.getElementById("game_in_progress_popup");
+            const scores_ref = db.collection("players_current_game").doc("scores"); // DB aliases
+            const booleans_ref = db.collection("players_current_game").doc("booleans");          
+            const players_ref = db.collection("players_current_game")
             
+            var game_in_progress_popup = document.getElementById("game_in_progress_popup");
+                        
+            var yellow_1_btn = document.getElementById("yellow_1");
+            var yellow_2_btn = document.getElementById("yellow_2");
+            var black_1_btn = document.getElementById("black_1");
+            var black_2_btn = document.getElementById("black_2");
+            var start_btn = document.getElementById("start")
             // Put the modal "Game in progress"
             
             booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
@@ -36,15 +44,6 @@ var uid = null
                 })
 
 
-            const scores_ref = db.collection("score_current_game").doc("scores"); // DB aliases
-            const players_ref = db.collection("players_current_game")
-                        
-            var yellow_1_btn = document.getElementById("yellow_1");
-            var yellow_2_btn = document.getElementById("yellow_2");
-            var black_1_btn = document.getElementById("black_1");
-            var black_2_btn = document.getElementById("black_2");
-            var start_btn = document.getElementById("start")
-
             // Sign-ups
 
             yellow_1_btn.onclick = function() {
@@ -58,7 +57,7 @@ var uid = null
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "yellow_1") {
                                 players_ref.doc("yellow_1").update({
-                                    uid: "",
+                                    uid: "none",
                                     name: "Claim spot!"
                                 });            
                             };
@@ -78,7 +77,7 @@ var uid = null
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "yellow_2") {
                                 players_ref.doc("yellow_2").update({
-                                    uid: "",
+                                    uid: "none",
                                     name: "Claim spot!"
                                 });            
                             };
@@ -98,7 +97,7 @@ var uid = null
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "black_1") {
                                 players_ref.doc("black_1").update({
-                                    uid: "",
+                                    uid: "none",
                                     name: "Claim spot!"
                                 });            
                             };
@@ -118,7 +117,7 @@ var uid = null
                         snapshot.docs.forEach(doc => {
                             if (doc.id == "black_2") {
                                 players_ref.doc("black_2").update({
-                                    uid: "",
+                                    uid: "none",
                                     name: "Claim spot!"
                                 });            
                             };
@@ -172,19 +171,22 @@ var uid = null
                 
                 booleans_ref.update({ // Set start of game, triggers players to go to game.html
                     has_game_ended: false, // and everyone else to be informed there is a game in progress
-                    has_game_started: true,
-                    has_game_page_been_exited: false
+                    has_game_page_been_exited: false,
+                    is_ready_to_record_game: false,
+                    has_game_been_recorded: false
                 }).then(function() {
+                    scores_ref.update({ // Set database scores back to 0 : 0 before game starts
+                        yellow_sc: 0,
+                        black_sc: 0,
+                        score_history: []
+                    })
+                    db.collection("users").doc("none").update({ // reset dummy user 
+                        elo: 0 // used in games where there's empty spots
+                    })
+                    }).then( function() {
                     window.location.replace('game.html');
                 })
-                
-                scores_ref.update({ // Set database scores back to 0 : 0 before game starts
-                    yellow_sc: 0,
-                    black_sc: 0,
-                    score_history: [],
-                    winner: ""
-                });
-                
+                            
             };
 
             // ---Events triggered from start of game---

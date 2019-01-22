@@ -1,8 +1,5 @@
 var mainApp = {};
 var firebase = app_fireBase;
-const db = firebase.firestore();
-db.settings({ timestampsInSnapshots: true });
-
 
 (function(){
 var uid = null // TODO: I don't think this is needed?    
@@ -50,7 +47,7 @@ var uid = null // TODO: I don't think this is needed?
             async function createTableBase(){ //TODO: see if this is actually async
                 var table = document.getElementById("rankingtable");
                 
-                await db.collection("users").orderBy("elo","desc").get().then(function(querySnapshot) {
+                await db.collection("users").where('elo', '>', 0).orderBy("elo","desc").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         createRow(doc.data(), table);
                     });
