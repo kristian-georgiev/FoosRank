@@ -29,7 +29,8 @@ function addNewUser(user) {
 	    name: user.displayName,
 	    totalgames: 0,
 	    gameswon: 0,
-	    gameslost: 0
+		gameslost: 0,
+		is_none: false
 	})
 	.then(function() {
 	    console.log("New user successfully added!");

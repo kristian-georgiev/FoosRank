@@ -4,13 +4,32 @@ body {
 
 #backgrounddiv {
 	/*background: radial-gradient(at 50% 0%, #98FC4F 8%,  #0F9B24 55%);*/
-	background: radial-gradient(at 50% 0%, #7BE330 80%,  #0F9B24 20%);
+	/* background: radial-gradient(at 50% 0%, #7BE330 80%,  #0F9B24 20%); */
+	/* background: radial-gradient(at 50% 0%, rgb(255, 255, 255) 8%,  rgb(221, 226, 222) 70%); */
+	background: white;
 	width:100vw;
-	height:100vh;
+	height:95vh;
 	position: relative;
 
 	display: flex;
   	justify-content: center;
+}
+
+footer{
+	background-color: #3B5441;
+	height: 5vh;
+}
+
+#footer_text{
+	color: white;
+	font-size: 3vh;
+	text-align: center;
+} 
+img{
+	width:100vmin;
+	object-fit: contain;
+	position: absolute;
+	top: 0;
 }
 
 #foosrank {

@@ -47,7 +47,7 @@ var uid = null // TODO: I don't think this is needed?
             async function createTableBase(){ //TODO: see if this is actually async
                 var table = document.getElementById("rankingtable");
                 
-                await db.collection("users").where('elo', '>', 0).orderBy("elo","desc").get().then(function(querySnapshot) {
+                await db.collection("users").where('is_none', '==', false).orderBy("elo","desc").get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         createRow(doc.data(), table);
                     });
