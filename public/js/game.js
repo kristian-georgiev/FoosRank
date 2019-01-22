@@ -34,6 +34,36 @@ db.settings({ timestampsInSnapshots: true });
             }).then(function () {
                 // Game starts
 
+                setTimeout(function () { // exit game after 45 mins, in case a user leaves the game unfinished
+                    booleans_ref.get()
+                    .then(doc => {
+                        plrs = ["black_1", "black_2", "yellow_1", "yellow_2"]
+                        for (plr in plrs) {
+                            players_ref.doc(plrs[plr]).update({
+                                name: "Claim spot!",
+                                uid: "none"
+                            });
+                        }
+                    }).then(function () { // and update game parameters
+                        booleans_ref.update({
+                            has_game_ended: false,
+                            has_game_page_been_exited: true,
+                            has_game_started: false,
+                            is_ready_to_record_game: false,
+                            winner: ""
+                        }).then(function () {
+                            scores_ref.update({ // clean game result
+                                yellow_sc: 0,
+                                black_sc: 0,
+                                score_history: []
+                            }).then(
+                                function () { // exit game
+                                    window.location.replace("main.html")
+                                });
+                        });
+                    });
+                },  45 * 60 * 1000);
+
                 players_ref.get().then((snapshot) => { // update player names in HTML
                     snapshot.docs.forEach(doc => {
                         if ((doc.id != "booleans") && (doc.id != "scores")) {
@@ -45,7 +75,6 @@ db.settings({ timestampsInSnapshots: true });
                         }
                     })
                 });
-
 
                 // =================== onSnapshot events ===================         
 

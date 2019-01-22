@@ -8,6 +8,7 @@ db.settings({ timestampsInSnapshots: true });
 var uid = null
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+
             // User is signed in.
             const scores_ref = db.collection("players_current_game").doc("scores"); // DB aliases
             const booleans_ref = db.collection("players_current_game").doc("booleans");          
@@ -21,7 +22,11 @@ var uid = null
             var black_2_btn = document.getElementById("black_2");
             var start_btn = document.getElementById("start")
             // Put the modal "Game in progress"
-            
+
+            start_btn.disabled = true;
+            start_btn.classList.add('disabled');
+
+           
             booleans_ref.onSnapshot(function() { // Listen for changes in the status of the game started/ended
                 booleans_ref.get().then(function(doc) {
                     if (doc.data().has_game_started == true) {
@@ -126,7 +131,6 @@ var uid = null
                 });
             };
 
-            // TODO: wrap the above code in a function to avoid repeating code
 
             // Update HTML upon changing players DB
 
