@@ -1,0 +1,9 @@
+{
+    "files": {
+      "included": [
+        "public/js/*.js"
+      ],
+      "excluded": [
+      ]
+    }
+  }
