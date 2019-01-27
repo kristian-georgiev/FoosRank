@@ -29,6 +29,8 @@ db.settings({ timestampsInSnapshots: true });
             var popup_undo = document.getElementById("popup_undo");
             var popup_continue = document.getElementById("popup_continue")
 
+
+
             booleans_ref.update({
                 has_game_started: true
             }).then(function () {
@@ -76,8 +78,6 @@ db.settings({ timestampsInSnapshots: true });
                         }
                     })
                 });
-
-                // =================== onSnapshot events ===================         
 
                 scores_ref.onSnapshot(function () { // Listen for changes in the scores DB 
                     scores_ref.get().then(function (doc) { // and update game status if necessary
