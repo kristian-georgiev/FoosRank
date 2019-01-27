@@ -1,55 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FoosRank</title>
 
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script defer src="/__/firebase/5.7.3/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/5.7.3/firebase-auth.js"></script>
-    <script defer src="/__/firebase/5.7.3/firebase-database.js"></script>
-    <script defer src="/__/firebase/5.7.3/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/index.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FoosRank</title>
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
 
 
-    <div id="backgrounddiv">
-        <img src="img/logo_transparent.png" alt="FoosRank">
-        <!-- <a id="foosrank" class="myfont"> FoosRank </a> -->
-        <button id="foosrankbutton" type="button" onclick="location.href = 'main.html'" class="btn btn-outline-dark" >Continue to FoosRank</button>
-        <a href="https://github.com/kristian-georgiev/FoosRank" id="github" class="fa fa-github" style="font-size:48px;"></a>
-      </div>
-      <footer>
-          <p id="footer_text">Powered by ⚽ and 🔥</p> 
-        </footer>
+  <div id="backgrounddiv">
+    <img src="img/logo_transparent.png" alt="FoosRank">
+    <a href="https://github.com/kristian-georgiev/FoosRank" id="github" class="fa fa-github" style="font-size:48px;"></a>
+    <div id="firebaseui-auth-container"></div>
+    <div id="loader">Loading...</div>
+  </div>
 
 
+  <footer>
+    <p id="footer_text">Powered by ⚽ and 🔥</p>
+  </footer>
 
-    <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
 
-        firebase.auth().onAuthStateChanged(user => { });
-        firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  <script src="js/fireBase.js"></script>
+  <script src="js/index.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+</body>
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-        } catch (e) {
-          console.error(e);
-        }
-      });
-    </script>
-  </body>
 </html>
+
+<!-- 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥 -->

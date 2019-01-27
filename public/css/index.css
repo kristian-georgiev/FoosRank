@@ -9,22 +9,11 @@ body {
 	background: white;
 	width:100vw;
 	height:95vh;
-	position: relative;
 
 	display: flex;
   	justify-content: center;
 }
 
-footer{
-	background-color: #3B5441;
-	height: 5vh;
-}
-
-#footer_text{
-	color: white;
-	font-size: 3vh;
-	text-align: center;
-} 
 img{
 	width:100vmin;
 	object-fit: contain;
@@ -46,14 +35,15 @@ img{
 	font-size: 4vmin;
 }
 
-#foosrankbutton {
+
+#firebaseui-auth-container {
 	position: absolute;
-	top:70vh;
+	top: 60vh;
 }
 
 #github {
-  	position: absolute;
-	top:80vh;
+  position: absolute;
+	top: 80vh;
 }
 
 a:visited{
@@ -63,7 +53,18 @@ a:link{
   color:black;
 }
 
-@media (max-width: 450px) {
+footer{
+	background-color: #3B5441;
+	height: 5vh;
+}
+
+#footer_text{
+	color: white;
+	font-size: 3vh;
+	text-align: center;
+} 
+
+/* @media (max-width: 450px) {
   body, #text { 
   	top:35vh;
   	font-size: 5vmin;
@@ -75,4 +76,4 @@ a:link{
   	top:70vh;
   }
 
-}
+} */
