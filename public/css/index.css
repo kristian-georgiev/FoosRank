@@ -8,42 +8,32 @@ body {
 	/* background: radial-gradient(at 50% 0%, rgb(255, 255, 255) 8%,  rgb(221, 226, 222) 70%); */
 	background: white;
 	width:100vw;
-	height:95vh;
-
-	display: flex;
-  	justify-content: center;
+	height:93vh;
+	/* display: flex; */
+	/* justify-content: center; */
+	position: block;
 }
 
 img{
 	width:100vmin;
 	object-fit: contain;
-	position: absolute;
-	top: 0;
+	position: relative;
 }
 
-#foosrank {
-	position:absolute;
-	top:20vh;
-	color: white;
-	font-size:20vmin;
+#logo_container {
+	position: block;
+	margin: 5px auto;
 }
-
-#text {
-	position: absolute;
-	color:white;
-	top:45vh;
-	font-size: 4vmin;
-}
-
 
 #firebaseui-auth-container {
-	position: absolute;
-	top: 60vh;
+	position: block;
+	margin: 5px auto;
 }
 
-#github {
-  position: absolute;
-	top: 80vh;
+#github_container {
+  position: block;
+	margin: 5px auto;
+	text-align: center;
 }
 
 a:visited{
@@ -53,9 +43,10 @@ a:link{
   color:black;
 }
 
+
 footer{
-	background-color: #3B5441;
-	height: 5vh;
+	background-color: #ffa100;
+	height: 7vh;
 }
 
 #footer_text{
