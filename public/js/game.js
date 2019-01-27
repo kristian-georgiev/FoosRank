@@ -51,6 +51,7 @@ db.settings({ timestampsInSnapshots: true });
             }, 45 * 60 * 1000);
 
 
+
             players_ref.get().then((snapshot) => { // update player names in HTML
                 snapshot.docs.forEach(doc => {
                     if ((doc.id != "booleans") && (doc.id != "scores")) {
@@ -62,6 +63,7 @@ db.settings({ timestampsInSnapshots: true });
                     }
                 })
             });
+
 
             scores_ref.onSnapshot(function () { // Listen for changes in the scores DB 
                 scores_ref.get().then(function (doc) { // and update game status and HTML
@@ -108,18 +110,6 @@ db.settings({ timestampsInSnapshots: true });
             });
 
 
-            booleans_ref.onSnapshot(function () { // Handle popup behaviour at end of game 
-                booleans_ref.get()
-                    .then(doc => {
-                        if (doc.data().has_game_ended == true) {
-                            display_popup(doc.data().winner);
-                        }
-                    }).catch(function (error) {
-                        console.log("Error getting document:", error);
-                    });
-            });
-
-
             // =================== catching user behaviour ===================         
 
             yellow_div.addEventListener('click', function (e) {
@@ -142,10 +132,7 @@ db.settings({ timestampsInSnapshots: true });
                     });
             });
 
-            // Undoing actions
-
             undo_button.onclick = function () {
-
                 scores_ref.get().then((doc) => {
                     last_to_score = doc.data().score_history.pop()
                     sc_hist = doc.data().score_history
@@ -167,10 +154,16 @@ db.settings({ timestampsInSnapshots: true });
             };
 
 
-            function display_popup(winning_team) {
-                popup_text.innerHTML = "<h1>" + winning_team + " wins!</h1>"
-                popup.style.display = "block";
-            };
+            booleans_ref.onSnapshot(function () { // Handle popup behaviour at end of game 
+                booleans_ref.get()
+                    .then(doc => {
+                        if (doc.data().has_game_ended == true) {
+                            display_popup(doc.data().winner);
+                        }
+                    }).catch(function (error) {
+                        console.log("Error getting document:", error);
+                    });
+            });
 
             popup_undo.onclick = function () {
                 scores_ref.get().then((doc) => {
@@ -215,6 +208,11 @@ db.settings({ timestampsInSnapshots: true });
 
 
             // Functions
+
+            function display_popup(winning_team) {
+                popup_text.innerHTML = "<h1>" + winning_team + " wins!</h1>"
+                popup.style.display = "block";
+            };
 
             async function clean_after_game() {
                 console.log("Restoring defaults after game is finished!")
@@ -315,14 +313,10 @@ db.settings({ timestampsInSnapshots: true });
             };
 
 
-
-
             function get_first_name(s) {
                 var sArray = s.split(" ");
                 return sArray[0]
             };
-
-
 
         } else {
             // redirect to login page
