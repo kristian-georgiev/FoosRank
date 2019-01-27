@@ -21,7 +21,7 @@ var uid = null
             var black_1_btn = document.getElementById("black_1");
             var black_2_btn = document.getElementById("black_2");
             var start_btn = document.getElementById("start")
-            start_btn.disabled = true;
+            start_btn.disabled = false;
             // Put the modal "Game in progress"
 
            
@@ -192,16 +192,16 @@ var uid = null
             // Enable/disable start button
 
             function toggle_start_button() {
-                if (((yellow_1_btn.innerHTML == yellow_2_btn.innerHTML) && (yellow_1_btn.innerHTML == "Claim spot!")) || // both yellow empty
-                ((black_1_btn.innerHTML == black_2_btn.innerHTML) && (black_1_btn.innerHTML == "Claim spot!"))) { // both black empty
-                    booleans_ref.update({
-                        start_button_enabled: false
-                    });
-                } else {
-                    booleans_ref.update({
-                        start_button_enabled: true
-                    })
-                }
+                // if (((yellow_1_btn.innerHTML == yellow_2_btn.innerHTML) && (yellow_1_btn.innerHTML == "Claim spot!")) || // both yellow empty
+                // ((black_1_btn.innerHTML == black_2_btn.innerHTML) && (black_1_btn.innerHTML == "Claim spot!"))) { // both black empty
+                //     booleans_ref.update({
+                //         start_button_enabled: false
+                //     });
+                // } else {
+                //     booleans_ref.update({
+                //         start_button_enabled: true
+                //     })
+                // }
             }
 
             booleans_ref.onSnapshot(function() {  
@@ -228,7 +228,7 @@ var uid = null
         }else{
             // redirect to login page
             uid = null;
-            window.location.replace("login.html");
+            window.location.replace("index.html");
         }
     });
 
