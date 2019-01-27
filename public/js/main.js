@@ -71,7 +71,7 @@ var uid = null // TODO: I don't think this is needed?
         }else{
             // redirect to login page
             uid = null;
-            window.location.replace("login.html");
+            window.location.replace("index.html");
         }
     });
 

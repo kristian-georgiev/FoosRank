@@ -8,52 +8,33 @@ body {
 	/* background: radial-gradient(at 50% 0%, rgb(255, 255, 255) 8%,  rgb(221, 226, 222) 70%); */
 	background: white;
 	width:100vw;
-	height:95vh;
-	position: relative;
-
-	display: flex;
-  	justify-content: center;
+	height:93vh;
+	/* display: flex; */
+	/* justify-content: center; */
+	position: block;
 }
 
-footer{
-	background-color: #3B5441;
-	height: 5vh;
-}
-
-#footer_text{
-	color: white;
-	font-size: 3vh;
-	text-align: center;
-} 
 img{
 	width:100vmin;
 	object-fit: contain;
-	position: absolute;
-	top: 0;
+	position: relative;
 }
 
-#foosrank {
-	position:absolute;
-	top:20vh;
-	color: white;
-	font-size:20vmin;
+#logo_container {
+	position: block;
+	margin: 5px auto;
+	text-align: center;
 }
 
-#text {
-	position: absolute;
-	color:white;
-	top:45vh;
-	font-size: 4vmin;
+#firebaseui-auth-container {
+	position: block;
+	margin: 5px auto;
 }
 
-#foosrankbutton {
-	position: absolute;
-	top:70vh;
-}
-
-#github {
-  	position: absolute;
-	top:80vh;
+#github_container {
+  position: block;
+	margin: 5px auto;
+	text-align: center;
 }
 
 a:visited{
@@ -63,7 +44,19 @@ a:link{
   color:black;
 }
 
-@media (max-width: 450px) {
+
+footer{
+	background-color: #ffa100;
+	height: 7vh;
+}
+
+#footer_text{
+	color: white;
+	font-size: 3vh;
+	text-align: center;
+} 
+
+/* @media (max-width: 450px) {
   body, #text { 
   	top:35vh;
   	font-size: 5vmin;
@@ -75,4 +68,4 @@ a:link{
   	top:70vh;
   }
 
-}
+} */

@@ -2,10 +2,7 @@
 
 /*yellow button*/
 .btn-yellow { 
-  color: #FFFFFF; 
-  background-color: #FFC128; 
-  border-color: #FFC128; 
-  border-radius: 10px;
+  border-radius: 16px;
 } 
  
 .btn-yellow:hover, 
@@ -50,10 +47,7 @@ fieldset[disabled] .btn-yellow.active {
 
 /*black button*/
 .btn-black { 
-  color: #FFFFFF; 
-  background-color: #3F474F; 
-  border-color: #3F474F; 
-  border-radius: 10px;
+  border-radius: 16px;
 } 
  
 .btn-black:hover, 

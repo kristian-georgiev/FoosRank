@@ -1,47 +1,58 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>FoosRank</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/button.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/waiting_area.css" />
 </head>
+
 <body>
-        <div style=" height: 15vh" >            
-            <nav class="navbar navbar-light bg-light" class="-webkit-box-shadow: 0 8px 6px -6px #999;
+    <div style=" height: 15vh">
+        <nav class="navbar navbar-light bg-light" class="-webkit-box-shadow: 0 8px 6px -6px #999;
                 -moz-box-shadow: 0 8px 6px -6px #999;
                 box-shadow: 0 8px 6px -6px #999;">
-                    <a class="navbar-brand" href="main.html" style="color: #ffa100; font-weight: bold; font-size: 16px;">FoosRank</a>
-                    <a class="ml-auto">
-                        <a id="navbar-id-text" class="nav-link" style="color: #ffa100;" href="playerprofile.html">User</a>
-                    </a>
+            <a class="navbar-brand" href="main.html" style="color: #ffa100; font-weight: bold; font-size: 16px;">FoosRank</a>
+            <a class="ml-auto">
+                <a id="navbar-id-text" class="nav-link" style="color: #ffa100;" href="playerprofile.html">User</a>
+            </a>
 
-            </nav>
-        </div>
+        </nav>
+    </div>
 
-        <div class="button_group">
-            <button id="yellow_1" type="button" class="btn-yellow" >Claim spot!</button>
-            <button id="black_1" type="button" class="btn-black" >Claim spot!</button>
-        </div>
-            <div class="button_group">
-            <button id="yellow_2" type="button" class="btn-yellow" >Claim spot!</button>
-            <button id="black_2" type="button" class="btn-black" >Claim spot!</button>
-        </div>
-            <button id="start" type="button" class="btn-start btn-block" disabled>Start!</button>
+    <div class="button_group">
+        <button id="yellow_1" type="button" class="btn-yellow" style="color: #FFC128; background-color: white; border-color: #FFC128;">
+            Claim spot!</button>
+        <button id="black_1" type="button" class="btn-black" style="color: #3F474F; background-color: white; border-color: #3F474F;">
+            Claim spot!</button>
+    </div>
+    <div class="button_group">
+        <button id="yellow_2" type="button" class="btn-yellow" style="color: #FFC128; background-color: white; border-color: #FFC128;">
+            Claim spot!</button>
+        <button id="black_2" type="button" class="btn-black" style="color: #3F474F; background-color: white; border-color: #3F474F;">
+            Claim spot!</button>
+    </div>
+    <button id="start" type="button" class="btn-start btn-block" disabled>Start!</button>
 
-        <div id="game_in_progress_popup" class="modal">
-                <div class="modal-content">
-                  <div id="popup_text" style="text-align:center"> <h1> Game in progress. </h1> </div>
-                  <button id="popup_continue" type="button" onclick="location.href='main.html';" class="btn btn-primary">Go Back</button>
-                </div>
-              </div>
-          
-        <script src="js/fireBase.js"></script>
-        <script src="js/waiting_area.js"></script>
+    <div id="game_in_progress_popup" class="modal">
+        <div class="modal-content">
+            <div id="popup_text" style="text-align:center">
+                <h1> Game in progress. </h1>
+            </div>
+            <button id="popup_continue" type="button" onclick="location.href='main.html';" class="btn btn-primary">Go
+                Back</button>
+        </div>
+    </div>
+
+    <script src="js/fireBase.js"></script>
+    <script src="js/waiting_area.js"></script>
 </body>
+
 </html>

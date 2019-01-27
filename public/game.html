@@ -30,12 +30,22 @@
     </button>
 
     <div id="popup" class="modal">
-      <div class="modal-content">
+      <div class="modal-content" id="popup_container">
         <div id="popup_text" style="text-align:center"> </div>
         <button id="popup_undo" type="button" class="btn btn-light ">Undo</button>
-        <button id="popup_continue" type="button" class="btn btn-primary">Continue</button>
+        <button id="popup_continue" type="button" class="btn btn-primary">Record</button>
       </div>
     </div>
+
+    <div id="popup_with_elos" class="modal">
+            <div class="modal-content">
+                    <h5 class="modal-title" style="text-align:center">Elo Updates</h5>
+                    <div id="popup_with_elos_title" style="text-align:center">  </div>
+                    <div id="popup_with_elos_text" style="text-align:center">  </div>
+              <button id="popup_with_elos_continue" type="button" class="btn btn-primary">Continue</button>
+            </div>
+          </div>
+      
 
     <script src="js/fireBase.js"></script>
     <script src="js/game.js"></script>
