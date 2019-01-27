@@ -21,7 +21,7 @@ var uid = null
             var black_1_btn = document.getElementById("black_1");
             var black_2_btn = document.getElementById("black_2");
             var start_btn = document.getElementById("start")
-            start_btn.disabled = false;
+            // start_btn.disabled = false;
             // Put the modal "Game in progress"
 
            
@@ -180,8 +180,6 @@ var uid = null
                     }).then( function() {
                         booleans_ref.update({ // Set start of game, triggers players to go to game.html
                             has_game_ended: false, // and everyone else to be informed there is a game in progress
-                            has_game_page_been_exited: false,
-                            is_ready_to_record_game: false,
                             has_game_started: false // game start is triggered in the game page
                         })                            
                     }).then( function() {
@@ -192,17 +190,19 @@ var uid = null
             // Enable/disable start button
 
             function toggle_start_button() {
-                // if (((yellow_1_btn.innerHTML == yellow_2_btn.innerHTML) && (yellow_1_btn.innerHTML == "Claim spot!")) || // both yellow empty
-                // ((black_1_btn.innerHTML == black_2_btn.innerHTML) && (black_1_btn.innerHTML == "Claim spot!"))) { // both black empty
-                //     booleans_ref.update({
-                //         start_button_enabled: false
-                //     });
-                // } else {
-                //     booleans_ref.update({
-                //         start_button_enabled: true
-                //     })
-                // }
-            }
+                if (((yellow_1_btn.innerHTML == yellow_2_btn.innerHTML) && (yellow_1_btn.innerHTML == "Claim spot!")) || // both yellow empty
+                ((black_1_btn.innerHTML == black_2_btn.innerHTML) && (black_1_btn.innerHTML == "Claim spot!"))) { // both black empty
+                    console.log("start button disabled")
+                    booleans_ref.update({
+                        start_button_enabled: false
+                    });
+                } else {
+                    console.log("start button enabled")
+                    booleans_ref.update({
+                        start_button_enabled: true
+                    })
+                };
+            };
 
             booleans_ref.onSnapshot(function() {  
                 booleans_ref.get().then(doc => {

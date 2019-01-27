@@ -31,6 +31,7 @@ db.settings({ timestampsInSnapshots: true });
             var popup_text = document.getElementById("popup_text");
             var popup_undo = document.getElementById("popup_undo");
             var popup_continue = document.getElementById("popup_continue")
+            var popup_container = document.getElementById("popup_container")
 
             var popup_with_elos = document.getElementById("popup_with_elos");
             var popup_with_elos_text = document.getElementById("popup_with_elos_text");
@@ -188,7 +189,8 @@ db.settings({ timestampsInSnapshots: true });
             };
 
             popup_continue.onclick = async function () {
-                popup.style.display = "none";
+
+                popup_container.innerHTML = "Recording...";
                 const new_elos = await get_new_elos_and_update_players();
                 elos_text = "";
                 for (let i = 0; i < new_elos.length; i++) {
@@ -198,6 +200,7 @@ db.settings({ timestampsInSnapshots: true });
                         elos_text += player + ": "  + elo + " \n"; 
                     };
                 };
+                popup.style.display = "none";
                 popup_with_elos_text.innerHTML = elos_text;
                 popup_with_elos.style.display = "block";
             };
