@@ -1,7 +1,6 @@
 var mainApp = {};
 var firebase = app_fireBase;
 
-(function(){
 var uid = null // TODO: I don't think this is needed?    
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -80,4 +79,3 @@ var uid = null // TODO: I don't think this is needed?
     }
 
     mainApp.logOut = logOut;
-})()

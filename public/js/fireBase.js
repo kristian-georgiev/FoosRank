@@ -1,6 +1,5 @@
 var app_fireBase = {};
 
-(function(){
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyAoyb8gVM28FrDsuCvKZ4AC5k3CI1rrKmg",
@@ -18,5 +17,3 @@ var app_fireBase = {};
   // Initialize Cloud Firestore through Firebase
   const db = firebase.firestore();
   db.settings({ timestampsInSnapshots: true });
-
-})()
