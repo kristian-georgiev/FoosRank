@@ -1,8 +1,5 @@
 var mainApp = {};
 var firebase = app_fireBase;
-const db = firebase.firestore();
-db.settings({ timestampsInSnapshots: true });
-
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
