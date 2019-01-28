@@ -16,6 +16,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 });
 
+// Log out
 function logOut() {
     firebase.auth().signOut();
 }
