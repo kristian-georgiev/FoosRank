@@ -94,6 +94,7 @@ db.settings({ timestampsInSnapshots: true });
                 let booleans = booleans_ref.update({ // Set start of game, triggers players to go to game.html
                     has_game_ended: false, // and everyone else to be informed there is a game in progress
                     has_game_started: false, // game start is triggered in the game page
+                    ready_to_exit_page: false,
                     start_button_enabled: false
                 })
                 _ = await Promise.all([scores, dummy, booleans]); // resolve the updates before going to game page

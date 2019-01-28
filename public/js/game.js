@@ -41,7 +41,8 @@ db.settings({ timestampsInSnapshots: true });
             booleans_ref.update({ // Update game status
                 has_game_started: true,
                 has_game_ended: false,
-                start_button_enabled: false
+                start_button_enabled: false,
+                ready_to_exit_page: false
             });
 
             console.log("Game starts")
@@ -108,6 +109,14 @@ db.settings({ timestampsInSnapshots: true });
                 }).catch(function (error) {
                     console.log("Error getting document:", error);
                 });
+            });
+
+            booleans_ref.onSnapshot(async function () {
+                raw = await booleans_ref.get();
+                is_ready_to_exit = raw.data().ready_to_exit_page;
+                if (is_ready_to_exit == true) {
+                    window.location.replace("main.html")
+                };
             });
 
 
@@ -229,19 +238,20 @@ db.settings({ timestampsInSnapshots: true });
                             });
                         }
                     })
-                await booleans_ref.update({ // update game parameters
+                    await scores_ref.update({ // clean game result
+                        yellow_sc: 0,
+                        black_sc: 0,
+                        score_history: []
+                    })
+
+                    await booleans_ref.update({ // update game parameters
                     has_game_ended: false,
                     has_game_started: false,
                     start_button_enabled: false,
+                    ready_to_exit_page: true,
                     winner: ""
                 })
-                await scores_ref.update({ // clean game result
-                    yellow_sc: 0,
-                    black_sc: 0,
-                    score_history: []
-                })
 
-                window.location.replace("main.html")
             };
 
 
