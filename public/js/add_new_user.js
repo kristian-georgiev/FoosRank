@@ -21,6 +21,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
 });
 
+// аdds a new user to the database
 function addNewUser(user) {
 
 	// Create a new document in collection "users"
