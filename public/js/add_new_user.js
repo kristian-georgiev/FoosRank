@@ -1,4 +1,3 @@
-var db = firebase.firestore();
 
 firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
