@@ -1,38 +1,53 @@
 var mainApp = {};
 var firebase = app_fireBase;
+const booleans_ref = db.collection("players_current_game").doc("booleans"); // DB aliases
+const players_ref = db.collection("players_current_game");
+const scores_ref = db.collection("players_current_game").doc("scores");
+
+var yellow_div = document.getElementById("yellow_color"); // Grab elts from page
+var black_div = document.getElementById("black_color");
+var undo_button = document.getElementById("undo");
+var scoretable = document.getElementById("scoretable");
+
+var yellow_1 = document.getElementById("y_1_name"); // Player names to be displayed
+var yellow_2 = document.getElementById("y_2_name"); // ignore linter marking them as not used
+var black_1 = document.getElementById("b_1_name"); // in use "update player names in HTML"
+var black_2 = document.getElementById("b_2_name");
+
+var popup = document.getElementById("popup");
+var popup_text = document.getElementById("popup_text");
+var popup_undo = document.getElementById("popup_undo");
+var popup_continue = document.getElementById("popup_continue")
+var popup_container = document.getElementById("popup_container")
+
+var popup_with_elos = document.getElementById("popup_with_elos");
+var popup_with_elos_text = document.getElementById("popup_with_elos_text");
+var popup_with_elos_continue = document.getElementById("popup_with_elos_continue");
+
+// Stop game and exit without recording if either side has no players
+// should never happen, but just to be safe
+players_ref.onSnapshot(async function () {
+    snapshot = await players_ref.get()
+    data = snapshot.docs.map(function (elt) {
+        return elt.data();
+    });
+    let [black_1, black_2, _, __, yellow_1, yellow_2] = data;
+    let players = [black_1, black_2, yellow_1, yellow_2];
+    if ((black_1.uid == black_2.uid) && (black_1.uid == "none") ||
+        ((yellow_1.uid == yellow_2.uid) && (yellow_1.uid == "none"))) {
+        booleans_ref.update({ // Update game status
+            has_game_started: false,
+            has_game_ended: false,
+            start_button_enabled: false,
+            ready_to_exit_page: true
+        });
+    };
+});
 
 var uid = null
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
-
-
-        // Variable declarations
-
-        const booleans_ref = db.collection("players_current_game").doc("booleans"); // DB aliases
-        const players_ref = db.collection("players_current_game");
-        const scores_ref = db.collection("players_current_game").doc("scores");
-
-        var yellow_div = document.getElementById("yellow_color"); // Grab elts from page
-        var black_div = document.getElementById("black_color");
-        var undo_button = document.getElementById("undo");
-        var scoretable = document.getElementById("scoretable");
-
-        var yellow_1 = document.getElementById("y_1_name"); // Player names to be displayed
-        var yellow_2 = document.getElementById("y_2_name"); // ignore linter marking them as not used
-        var black_1 = document.getElementById("b_1_name"); // in use "update player names in HTML"
-        var black_2 = document.getElementById("b_2_name");
-
-        var popup = document.getElementById("popup");
-        var popup_text = document.getElementById("popup_text");
-        var popup_undo = document.getElementById("popup_undo");
-        var popup_continue = document.getElementById("popup_continue")
-        var popup_container = document.getElementById("popup_container")
-
-        var popup_with_elos = document.getElementById("popup_with_elos");
-        var popup_with_elos_text = document.getElementById("popup_with_elos_text");
-        var popup_with_elos_continue = document.getElementById("popup_with_elos_continue");
-
 
         booleans_ref.update({ // Update game status
             has_game_started: true,
@@ -247,7 +262,6 @@ firebase.auth().onAuthStateChanged(function (user) {
                 ready_to_exit_page: true,
                 winner: ""
             })
-
         };
 
 
@@ -278,18 +292,24 @@ firebase.auth().onAuthStateChanged(function (user) {
             const prob_y_win = 1.0 / (1.0 + Math.pow(10, ((b_elo_overall - y_elo_overall) / 400)));
             const prob_b_win = 1 - prob_y_win;
 
-            if (scores.yellow_sc > scores.black_sc) {
-                var did_y_win = 1;
-                var did_b_win = 0;
-            } else {
-                var did_y_win = 0;
-                var did_b_win = 1;
-            }
+            y_score = scores.yellow_sc; 
+            b_score = scores.black_sc;
 
-            const score_diff = Math.abs(scores.yellow_sc - scores.black_sc);
+            // if (scores.yellow_sc > scores.black_sc) {
+            //     var did_y_win = 1;
+            //     var did_b_win = 0;
+            // } else {
+            //     var did_y_win = 0;
+            //     var did_b_win = 1;
+            // }
+            // const score_diff = Math.abs(scores.yellow_sc - scores.black_sc);
 
-            const b_diff = Math.round(32 * Math.log2(score_diff) * (did_b_win - prob_b_win));
-            const y_diff = Math.round(64 * Math.log2(score_diff) * (did_y_win - prob_y_win));
+
+
+            // Treat each point as an independent trial
+
+            const b_diff = Math.round(b_score * 3.2 * Math.log2(score_diff) * (1 - prob_b_win)) + Math.round(y_score * 3.2 * Math.log2(score_diff) * (0 - prob_b_win)); 
+            const y_diff = Math.round(b_score * 3.2 * Math.log2(score_diff) * (0 - prob_y_win)) + Math.round(y_score * 3.2 * Math.log2(score_diff) * (1 - prob_y_win));
 
 
             new_elos = users.map((user, index) => {
@@ -310,7 +330,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                         elo: new_elos[i][1],
                         totalgames: users[i].totalgames + 1,
                         gameslost: users[i].gameslost + did_b_win,
-                        gameswon: users[i].gameswon + did_y_win
+                        gameswon: users[i].gameswon + did_y_win     
                     }));
             };
 
