@@ -295,17 +295,6 @@ firebase.auth().onAuthStateChanged(function (user) {
             y_score = scores.yellow_sc; 
             b_score = scores.black_sc;
 
-            // if (scores.yellow_sc > scores.black_sc) {
-            //     var did_y_win = 1;
-            //     var did_b_win = 0;
-            // } else {
-            //     var did_y_win = 0;
-            //     var did_b_win = 1;
-            // }
-            // const score_diff = Math.abs(scores.yellow_sc - scores.black_sc);
-
-
-
             // Treat each point as an independent trial
 
             const b_diff = Math.round(b_score * 3.2 * Math.log2(score_diff) * (1 - prob_b_win)) + Math.round(y_score * 3.2 * Math.log2(score_diff) * (0 - prob_b_win)); 
