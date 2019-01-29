@@ -297,8 +297,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             // Treat each point as an independent trial
 
-            const b_diff = Math.round(b_score * 3.2 * Math.log2(score_diff) * (1 - prob_b_win)) + Math.round(y_score * 3.2 * Math.log2(score_diff) * (0 - prob_b_win)); 
-            const y_diff = Math.round(b_score * 3.2 * Math.log2(score_diff) * (0 - prob_y_win)) + Math.round(y_score * 3.2 * Math.log2(score_diff) * (1 - prob_y_win));
+            const b_diff = Math.round(b_score * 3.2 * (1 - prob_b_win)) + Math.round(y_score * 3.2 * (0 - prob_b_win)); 
+            const y_diff = Math.round(b_score * 3.2 * (0 - prob_y_win)) + Math.round(y_score * 3.2 * (1 - prob_y_win));
 
 
             new_elos = users.map((user, index) => {
