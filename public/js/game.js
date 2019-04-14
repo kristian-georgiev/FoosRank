@@ -286,6 +286,10 @@ firebase.auth().onAuthStateChanged(function (user) {
             users = users_info.map(function (user) {
                 return user.data()
             });
+            
+            // ==============================================
+            // ========= ELO calculation ====================
+            // ==============================================
 
             const b_elo_overall = (users[0].elo + users[1].elo) / 2;
             const y_elo_overall = (users[2].elo + users[3].elo) / 2;
@@ -294,19 +298,19 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             y_score = scores.yellow_sc; 
             b_score = scores.black_sc;
-
-            did_b_win = b_score > y_score;
-            did_y_win = y_score > b_score;
-
+           
+            // Make the game slightly not zero-sum
+            win_reward = 18;
+            lose_penalty = 15;
+            
             // Treat each point as an independent trial
-
-            const b_diff = Math.round(b_score * 3.2 * (1 - prob_b_win)) + Math.round(y_score * 3.2 * (0 - prob_b_win)); 
-            const y_diff = Math.round(b_score * 3.2 * (0 - prob_y_win)) + Math.round(y_score * 3.2 * (1 - prob_y_win));
+            const b_diff = Math.round(y_score * lose_penalty * (0 - prob_b_win)) + Math.round(b_score * win_reward * (1 - prob_b_win)); 
+            const y_diff = Math.round(b_score * lose_penalty * (0 - prob_y_win)) + Math.round(y_score * win_reward * (1 - prob_y_win));
 
 
             new_elos = users.map((user, index) => {
                 elo = user.elo;
-                if (index <= 1) {
+                if (index <= 1) { // if black
                     elo += b_diff
                 } else {
                     elo += y_diff
@@ -315,6 +319,8 @@ firebase.auth().onAuthStateChanged(function (user) {
             });
 
             updates = []
+            did_b_win = b_score > y_score;
+            did_y_win = y_score > b_score;
 
             for (let i = 0; i < users.length; i++) {
                 updates.push(
@@ -324,7 +330,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                         gameslost: users[i].gameslost + did_b_win,
                         gameswon: users[i].gameswon + did_y_win     
                     }));
-            };
+            };  
 
             _ = await Promise.all(updates)
 

@@ -16,7 +16,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         
         }else{
             // redirect to login page
-            window.location.replace("login.html");
+            window.location.replace("index.html");
         }
 });
 
