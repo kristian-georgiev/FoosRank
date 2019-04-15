@@ -17,7 +17,7 @@ var black_2 = document.getElementById("b_2_name");
 var popup = document.getElementById("popup");
 var popup_text = document.getElementById("popup_text");
 var popup_undo = document.getElementById("popup_undo");
-var popup_continue = document.getElementById("popup_continue")
+var popup_record = document.getElementById("popup_record")
 var popup_container = document.getElementById("popup_container")
 
 var popup_with_elos = document.getElementById("popup_with_elos");
@@ -139,6 +139,10 @@ firebase.auth().onAuthStateChanged(function (user) {
                     scores_ref.update({
                         yellow_sc: doc.data().yellow_sc + 1,
                         score_history: doc.data().score_history.concat("y")
+                    }).then( _ => {
+                        if ((y_sc == 10 && b_sc <= 8) || (y_sc > 10 && (y_sc - b_sc == 2))) {
+                            display_popup("Yellow");
+                        }
                     });
                 });
         });
@@ -149,6 +153,10 @@ firebase.auth().onAuthStateChanged(function (user) {
                     scores_ref.update({
                         black_sc: doc.data().black_sc + 1,
                         score_history: doc.data().score_history.concat("b")
+                    }).then(_ => {
+                        if ((b_sc == 10 && y_sc <= 8) || (b_sc > 10 && (b_sc - y_sc == 2))) {
+                            display_popup("Black");
+                        }
                     });
                 });
         });
@@ -175,16 +183,16 @@ firebase.auth().onAuthStateChanged(function (user) {
         };
 
 
-        booleans_ref.onSnapshot(function () { // Handle popup behaviour at end of game 
-            booleans_ref.get()
-                .then(doc => {
-                    if (doc.data().has_game_ended == true) {
-                        display_popup(doc.data().winner);
-                    }
-                }).catch(function (error) {
-                    console.log("Error getting document:", error);
-                });
-        });
+        // booleans_ref.onSnapshot(function () { // Handle popup behaviour at end of game 
+        //     booleans_ref.get()
+        //         .then(doc => {
+        //             if (doc.data().has_game_ended == true) {
+        //                 display_popup(doc.data().winner);
+        //             }
+        //         }).catch(function (error) {
+        //             console.log("Error getting document:", error);
+        //         });
+        // });
 
         popup_undo.onclick = function () {
             scores_ref.get().then((doc) => {
@@ -208,7 +216,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             popup.style.display = "none";
         };
 
-        popup_continue.onclick = async function () {
+        popup_record.onclick = async function () {
 
             popup_container.innerHTML = "Recording...";
             const res = await get_new_elos_and_update_players();

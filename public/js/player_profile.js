@@ -29,10 +29,12 @@ firebase.auth().onAuthStateChanged(function (user) {
                 }
                 else if (columns[i] == "Black 2") {
                     var cellText = document.createTextNode(data.black2name);
-                }
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-            }
+                };
+                if (cellText != "Claim spot!") {
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                };
+            };
 
             table.appendChild(row);
         }
