@@ -64,7 +64,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         async function createTableBase() {
             var table = document.getElementById("gamestable");
 
-            await db.collection("games").where('uids', 'array-contains', user.uid).get().then(function (querySnapshot) {
+            await db.collection("games").where('uids', 'array-contains', user.uid).orderBy("timestamp", "desc").get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
                     createRow(doc.data(), table);
                 });
