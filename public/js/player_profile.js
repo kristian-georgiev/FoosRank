@@ -13,46 +13,46 @@ firebase.auth().onAuthStateChanged(function (user) {
             for (i = 0; i < columns.length; i++) {
                 var cell = document.createElement("td");
                 if (columns[i] == "Yellow 1") {
-                    var cellText = document.createTextNode(data.yellow1uid);
+                    var cellText = document.createTextNode(data.yellow1name);
                 }
-                else if (columns[i] == "Yeellow 2") {
-                    var cellText = document.createTextNode(data.yellow2uid);
+                else if (columns[i] == "Yellow 2") {
+                    var cellText = document.createTextNode(data.yellow2name);
                 }
-                else if (columns[i] == "Black 1") {
-                    var cellText = document.createTextNode(data.black1uid);
-                }
-                else if (columns[i] == "Black 2") {
-                    var cellText = document.createTextNode(data.black2uid);
-                }
-                else if (columns[i] == "Games") {
+                else if (columns[i] == "Yellow Score") {
                     var cellText = document.createTextNode(data.yellow_score);
                 }
-                else { // Elo
+                else if (columns[i] == "Black Score") { 
                     var cellText = document.createTextNode(data.black_score);
+                }
+                else if (columns[i] == "Black 1") {
+                    var cellText = document.createTextNode(data.black1name);
+                }
+                else if (columns[i] == "Black 2") {
+                    var cellText = document.createTextNode(data.black2name);
                 }
                 cell.appendChild(cellText);
                 row.appendChild(cell);
             }
 
             table.appendChild(row);
-            ranking += 1;
         }
 
         async function createTableBase() {
-            var table = document.getElementById("rankingtable");
+            var table = document.getElementById("gamestable");
 
-            await db.collection("users").where('is_none', '==', false).orderBy("elo", "desc").get().then(function (querySnapshot) {
+            await db.collection("games").where('uids', 'array-contains', user.uid).get().then(function (querySnapshot) {
                 querySnapshot.forEach(function (doc) {
                     createRow(doc.data(), table);
                 });
             });
 
         }
-
-        var columns = ["Ranking", "Name", "Elo", "Games"];
-        var ranking = 1;
+        
+        var columns = ["Yellow 1", "Yellow 2", "Yellow Score", "Black Score", "Black 1", "Black 2"];
 
         createTableBase();
+
+
 
 
 

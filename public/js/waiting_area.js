@@ -4,11 +4,10 @@ var firebase = app_fireBase;
 var uid = null
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        game = get_game_from_user();
         // User is signed in.
-        const scores_ref = db.collection("players_current_game").game.doc("scores"); // DB aliases
+        const scores_ref   = db.collection("players_current_game").doc("scores"); // DB aliases
         const booleans_ref = db.collection("players_current_game").doc("booleans");
-        const players_ref = db.collection("players_current_game")
+        const players_ref  = db.collection("players_current_game")
 
         var game_in_progress_popup = document.getElementById("game_in_progress_popup");
 

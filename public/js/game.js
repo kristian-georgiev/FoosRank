@@ -211,13 +211,23 @@ firebase.auth().onAuthStateChanged(function (user) {
         popup_continue.onclick = async function () {
 
             popup_container.innerHTML = "Recording...";
-            const new_elos = await get_new_elos_and_update_players();
+            const res = await get_new_elos_and_update_players();
+            [new_elos, y_diff, b_diff] = res;
+            if (y_diff > 0) {
+                y_color = "green";
+                b_color = "red";
+            } else {
+                y_color = "red";
+                b_color = "green";
+            }
+            color = [b_color, b_color, y_color, y_color];
             elos_text = "";
+            elo_change = [b_diff, b_diff, y_diff, y_diff];
             for (let i = 0; i < new_elos.length; i++) {
                 player = new_elos[i][0];
                 elo = new_elos[i][1];
                 if (player != "none") {
-                    elos_text += player + ": " + elo + " \n";
+                    elos_text += "<p><font color='" + color[i] + "'>" + player + ": " + elo + ", elo change " + elo_change[i] + "</font></p>";
                 };
             };
             popup.style.display = "none";
@@ -271,9 +281,9 @@ firebase.auth().onAuthStateChanged(function (user) {
                 return elt.data();
             });
 
-            let [black_1, black_2, _, scores, yellow_1, yellow_2] = data;
+            let [black_1_pl, black_2_pl, _, scores, yellow_1_pl, yellow_2_pl] = data;
 
-            let players = [black_1, black_2, yellow_1, yellow_2];
+            let players = [black_1_pl, black_2_pl, yellow_1_pl, yellow_2_pl];
 
             let temp = [0, 0, 0, 0];
 
@@ -318,6 +328,11 @@ firebase.auth().onAuthStateChanged(function (user) {
                 return [user.name, elo]
             });
 
+
+            // ==============================================
+            // ======= Updates and Game recording ===========
+            // ==============================================
+
             updates = []
             did_b_win = b_score > y_score;
             did_y_win = y_score > b_score;
@@ -334,9 +349,23 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             _ = await Promise.all(updates)
 
+
+            _ = await db.collection("games").doc(Date.now().toString()).set({
+                uids : players.map(x => x.uid),
+                black1name: black_1_pl.name,
+                black2name: black_2_pl.name,
+                yellow1name: yellow_1_pl.name,
+                yellow2name: yellow_2_pl.name,
+                yellow_score: y_score,
+                black_score: b_score,
+                timestamp: Date.now()
+            });
+
             console.log(new_elos);
 
-            return new_elos;
+            res = [new_elos, y_diff, b_diff];
+
+            return res;
         };
 
 
