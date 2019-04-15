@@ -28,7 +28,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                             }],
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true,
+                                    beginAtZero: false,
                                 },
                                 display: true,
                                 scaleLabel: {

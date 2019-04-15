@@ -341,17 +341,37 @@ firebase.auth().onAuthStateChanged(function (user) {
             // ======= Updates and Game recording ===========
             // ==============================================
 
+            timeStamps = [];
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].timestamps != null){
+                    timeStamps.push(users[i].timestamps.concat(Date.now()))
+                } else {
+                    timeStamps.push([Date.now()])
+                }
+            };
+
+            elosArr = [];
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].elos != null){
+                    elosArr.push(users[i].elos.concat(new_elos[i][1]))
+                } else {
+                    elosArr.push([new_elos[i][1]])
+                }
+            };
+
             updates = []
             did_b_win = b_score > y_score;
             did_y_win = y_score > b_score;
 
             for (let i = 0; i < users.length; i++) {
                 updates.push(
-                    db.collection("users").doc(players[i].uid).update({
+                    db.collection("users").doc(players[i].uid).set({
                         elo: new_elos[i][1],
                         totalgames: users[i].totalgames + 1,
                         gameslost: users[i].gameslost + did_b_win,
-                        gameswon: users[i].gameswon + did_y_win     
+                        gameswon: users[i].gameswon + did_y_win,
+                        elos: elosArr[i],
+                        timestamps: timeStamps[i]
                     }));
             };  
 
