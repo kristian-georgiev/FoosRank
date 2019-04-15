@@ -126,7 +126,7 @@ firebase.auth().onAuthStateChanged(function (user) {
             raw = await booleans_ref.get();
             is_ready_to_exit = raw.data().ready_to_exit_page;
             if (is_ready_to_exit == true) {
-                window.location.replace("main.html")
+                window.location.replace("playerprofile.html")
             };
         });
 
