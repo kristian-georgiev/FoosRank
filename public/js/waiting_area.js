@@ -7,7 +7,9 @@ firebase.auth().onAuthStateChanged(function (user) {
         // User is signed in.
         const scores_ref   = db.collection("players_current_game").doc("scores"); // DB aliases
         const booleans_ref = db.collection("players_current_game").doc("booleans");
-        const players_ref  = db.collection("players_current_game")
+        const players_ref  = db.collection("players_current_game");
+
+        const raspberry_pi_ref = db.collection("raspberry_pi_input").doc("fake_button_presses");
 
         var game_in_progress_popup = document.getElementById("game_in_progress_popup");
 
