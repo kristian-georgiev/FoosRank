@@ -4,6 +4,16 @@ var firebase = app_fireBase;
 var uid = null
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
+        ////////testing
+        justLoaded = true;
+        db.collection("raspberry_pi_input").doc("fake_button_presses").onSnapshot(function(doc) {
+             if (!justLoaded){
+                console.log("Current data: ", doc.data());
+             } else{
+                justLoaded = false;
+             }
+        });
+        ////////end testing
         // User is signed in.
         const scores_ref   = db.collection("players_current_game").doc("scores"); // DB aliases
         const booleans_ref = db.collection("players_current_game").doc("booleans");
@@ -19,6 +29,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         var black_2_btn = document.getElementById("black_2");
         var start_btn = document.getElementById("start");
         const empty_spot_text = "Claim spot!";
+
 
         db.collection("users").doc(user.uid).get().then((me) => { // display user info in navbar    
             document.getElementById("navbar-id-text").innerHTML = get_first_name(user.displayName) + " " + me.data().elo;

@@ -17,24 +17,22 @@ from firebase_admin import firestore
 yellow_div_score = 0 # TODO: need to update based on results from Arduino
 black_div_score = 0
 
-def blackDivScored(black_div_score, yellow_div_score):
+def blackDivScored(black_div_score):
 	#### NOTE: putting this in the players_current_game collection caused an error
 	# ("undefined" player showed up in waiting area) so we're not doing that lmao
 	black_div_score += 1
-	doc_ref = db.collection(u'raspberry_pi_input').document(u'fake_button_presses')
+	doc_ref = db.collection(u'raspberry_pi_input').document(u'black')
 	doc_ref.set({
-	    u'fake_yellow_div_score': yellow_div_score,
 	    u'fake_black_div_score': black_div_score
 	})
 
-def yellowDivScored(black_div_score, yellow_div_score):
+def yellowDivScored(yellow_div_score):
 	#### NOTE: putting this in the players_current_game collection caused an error
 	# ("undefined" player showed up in waiting area) so we're not doing that lmao
 	yellow_div_score += 1
-	doc_ref = db.collection(u'raspberry_pi_input').document(u'fake_button_presses')
+	doc_ref = db.collection(u'raspberry_pi_input').document(u'yellow')
 	doc_ref.set({
-	    u'raspberry_yellow_div_score': yellow_div_score,
-	    u'raspberry_black_div_score': black_div_score
+	    u'raspberry_yellow_div_score': yellow_div_score
 	})
 
 # Use the application default credentials
@@ -46,16 +44,20 @@ firebase_admin.initialize_app(cred, {
 def endGame():
 	yellow_div_score = 0
 	black_div_score = 0
-	doc_ref = db.collection(u'raspberry_pi_input').document(u'fake_button_presses')
-	doc_ref.set({
-	    u'raspberry_yellow_div_score': 0,
+	black_ref = db.collection(u'raspberry_pi_input').document(u'black')
+	black_ref.set({
 	    u'raspberry_black_div_score': 0
+	})
+	yellow_ref = db.collection(u'raspberry_pi_input').document(u'yellow')
+	yellow_ref.set({
+	    u'raspberry_yellow_div_score': 0
 	})
 
 
 db = firestore.client()
 
-blackDivScored(black_div_score, yellow_div_score)
+blackDivScored(black_div_score)
+yellowDivScored(yellow_div_score)
 #yelloDivScored() #TODO: put these when the score is changed
 
 #endGame() #TODO:
