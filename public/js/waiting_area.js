@@ -5,12 +5,20 @@ var uid = null
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         ////////testing
-        justLoaded = true;
-        db.collection("raspberry_pi_input").doc("fake_button_presses").onSnapshot(function(doc) {
-             if (!justLoaded){
+        justLoadedYellow = true; //using both justLoadedBlack and justLoadedYellow to stop onSnapshot firing on page load
+        justLoadedBlack = true;
+        db.collection("raspberry_pi_input").doc("yellow").onSnapshot(function(doc) {
+             if (!justLoadedYellow){
                 console.log("Current data: ", doc.data());
              } else{
-                justLoaded = false;
+                justLoadedYellow = false;
+             }
+        });
+        db.collection("raspberry_pi_input").doc("black").onSnapshot(function(doc) {
+             if (!justLoadedBlack){
+                console.log("Current data: ", doc.data());
+             } else{
+                justLoadedBlack = false;
              }
         });
         ////////end testing
