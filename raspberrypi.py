@@ -23,7 +23,7 @@ def blackDivScored(black_div_score):
 	black_div_score += 1
 	doc_ref = db.collection(u'raspberry_pi_input').document(u'black')
 	doc_ref.set({
-	    u'fake_black_div_score': black_div_score
+	    u'raspberry_black_div_score': black_div_score
 	})
 
 def yellowDivScored(yellow_div_score):
