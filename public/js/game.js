@@ -130,7 +130,25 @@ firebase.auth().onAuthStateChanged(function (user) {
             };
         });
 
-
+        // =================== simulating user behavior clicking on score divs(from raspberry pi / arduino input)=====/
+         ////////testing
+        justLoadedYellow = true; //using both justLoadedBlack and justLoadedYellow to stop onSnapshot firing on page load
+        justLoadedBlack = true;
+        db.collection("raspberry_pi_input").doc("yellow").onSnapshot(function(doc) {
+             if (!justLoadedYellow){
+                yellow_div.click();
+             } else{
+                justLoadedYellow = false;
+             }
+        });
+        db.collection("raspberry_pi_input").doc("black").onSnapshot(function(doc) {
+             if (!justLoadedBlack){
+                black_div.click();
+             } else{
+                justLoadedBlack = false;
+             }
+        });
+        ////////end testing
         // =================== catching user behaviour ===================         
 
         yellow_div.addEventListener('click', function (e) {

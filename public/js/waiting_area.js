@@ -4,24 +4,6 @@ var firebase = app_fireBase;
 var uid = null
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        ////////testing
-        justLoadedYellow = true; //using both justLoadedBlack and justLoadedYellow to stop onSnapshot firing on page load
-        justLoadedBlack = true;
-        db.collection("raspberry_pi_input").doc("yellow").onSnapshot(function(doc) {
-             if (!justLoadedYellow){
-                console.log("Current data: ", doc.data());
-             } else{
-                justLoadedYellow = false;
-             }
-        });
-        db.collection("raspberry_pi_input").doc("black").onSnapshot(function(doc) {
-             if (!justLoadedBlack){
-                console.log("Current data: ", doc.data());
-             } else{
-                justLoadedBlack = false;
-             }
-        });
-        ////////end testing
         // User is signed in.
         const scores_ref   = db.collection("players_current_game").doc("scores"); // DB aliases
         const booleans_ref = db.collection("players_current_game").doc("booleans");
